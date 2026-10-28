@@ -40,12 +40,18 @@ class VerificationResult:
 
     @property
     def is_safe(self) -> bool:
+        """Whether this simulation has neither violations nor operation errors.
+
+        Scoped to this state and proposal, not real-world execution approval.
+        """
         return not self.violations and not self.simulation.errors
 
 
 def verify(simulation: Simulation) -> VerificationResult:
     """Protect any record observed with a protection flag during this proposal.
 
+    "Observed" means encountered in the simulation, including hypothetical
+    input records; it does not establish real-world facts.
     Protection is sticky within a proposal: clearing flags or recreating an ID
     cannot authorize a later deletion. Each rule emits its earliest witness.
     """
