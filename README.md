@@ -73,7 +73,7 @@ between snapshots, while mutable working storage is always private.
 
 This is a deterministic execution model, not a production executor or formal
 proof system. It provides no persistence, transactions against a live database,
-concurrency control, authorization, model planner, or repair loop. A future
+concurrency control, authorization, model planner, or model integration. A future
 executor must revalidate against the current state and use an atomic commit
 protocol to avoid stale-snapshot races.
 
@@ -159,3 +159,76 @@ witness is found. The budget bounds evaluations, not input size or time per
 simulation. Even after exhausting the domain, a negative result reports only
 **“No counterexample found within the budget.”** It never establishes universal
 safety or approves execution.
+
+## Counterexample-guided repair (offline)
+
+`repair_proposal` accepts an injectable local callable. A future model adapter
+can translate its structured request into a prompt and parse a typed `Proposal`;
+this package makes no model or network calls and never executes database writes.
+
+```python
+from parallel_agent import CreateCustomer, Disposition, repair_proposal
+
+# Preserve the actual task: ensure a new customer exists.
+def goal(evaluation):
+    return evaluation.simulation.final_state.get("new-customer") is not None
+
+def offline_repair(request):
+    evidence = request.evidence
+    # Inspect evidence.failures, observed_evaluation, and search.witness here.
+    return Proposal((CreateCustomer(Customer("new-customer")),))
+
+result = repair_proposal(
+    state, proposal, offline_repair,
+    max_repair_attempts=3,
+    search_budget_per_iteration=100,
+    max_search_evaluations=400,
+    goal=goal,
+)
+if result.disposition is Disposition.PASSED_BOUNDED_CHECKS:
+    print(result.accepted_proposal)  # candidate only, not execution approval
+print(result.detail)
+```
+
+Every distinct candidate is independently simulated and verified against the
+**original supplied state**, then searched over the existing bounded candidate
+domain. Prior simulated final states and hypothetical witnesses never replace
+that state. History entries include the proposal, full observed evaluation,
+search result and replayable witness, goal outcome, and separate failure kinds:
+observed constraint violations, simulation errors, counterfactual vulnerabilities,
+and unmet goals. Witness provenance remains explicit. `OBSERVED_STATE` refers to
+the supplied snapshot, not authenticated database facts; even that simulation
+can introduce hypothetical records. `COUNTERFACTUAL_STATE` records are assumptions,
+never verified facts about the supplied database. Search targets constraint
+violations, not counterfactual operation errors or counterfactual goal failures.
+
+The goal callable receives the observed `VerificationResult` and must return an
+actual `bool`. It can inspect initial/final states and the full trace. A false
+result triggers repair; exceptions or malformed goal results terminate closed.
+Without a goal, task completion is not checked: empty or no-op proposals can pass
+the constraint checks. Supply a task-specific goal to prevent abandonment.
+
+`max_repair_attempts` counts callback invocations, excluding the initial proposal.
+The per-iteration search allowance must be positive to proceed, and the remaining
+total budget must cover the full allowance before an iteration starts. Only
+actual search evaluations are charged; early witness/domain exhaustion can leave
+budget available. A completed search with no witness may pass bounded checks even
+if it uses the last available evaluation. An insufficient allowance for a needed
+iteration terminates with `SEARCH_BUDGET_EXHAUSTED`; zero never yields acceptance.
+Independent observed evaluations are additional, bounded by attempts plus one.
+These are count limits, not time, memory, input-size, or callback execution limits.
+
+The repair request includes immutable history, the original snapshot, attempt
+number, remaining attempts, and remaining search evaluations. Callbacks must
+return exactly a validated `Proposal`, not JSON, text, a safety verdict, or a
+replacement state. Invalid responses and callback exceptions fail closed. Exact
+proposal repetitions (including cycles) terminate without redundant evaluation.
+The result records attempts, search evaluations, last valid proposal, history,
+and disposition; `accepted_proposal` is `None` on every failure. A repeated or
+budget-blocked last proposal has no new history entry because it was not evaluated.
+Callbacks are trusted local Python code, not a sandbox for hostile code.
+
+`PASSED_BOUNDED_CHECKS` means only that observed checks and any supplied goal
+passed and no constraint witness was found within the configured search budget
+and candidate domain. It is not universal safety, a proof of task intent, or
+permission to execute. Existing simulator, verifier, and search APIs are unchanged.
