@@ -1,10 +1,10 @@
 """Immutable, validated inputs for deterministic execution."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import TypeAlias
 
 
 def _identifier(value: str) -> None:
-    if not isinstance(value, str) or not value.strip():
+    if type(value) is not str or not value.strip():
         raise ValueError("customer_id must be a nonblank string")
 
 
@@ -41,6 +41,7 @@ class DatabaseState:
 @dataclass(frozen=True, slots=True)
 class CreateCustomer:
     customer: Customer
+    type: str = field(default="create_customer", init=False)
 
     def __post_init__(self) -> None:
         if type(self.customer) is not Customer:
@@ -50,6 +51,7 @@ class CreateCustomer:
 @dataclass(frozen=True, slots=True)
 class ReplaceCustomer:
     customer: Customer
+    type: str = field(default="replace_customer", init=False)
 
     def __post_init__(self) -> None:
         if type(self.customer) is not Customer:
@@ -59,6 +61,7 @@ class ReplaceCustomer:
 @dataclass(frozen=True, slots=True)
 class DeleteCustomer:
     customer_id: str
+    type: str = field(default="delete_customer", init=False)
 
     def __post_init__(self) -> None:
         _identifier(self.customer_id)
