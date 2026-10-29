@@ -1,4 +1,4 @@
-# PARALLEL inference — prepared only
+# PARALLEL inference
 
 **Built with Llama.** Model: public
 [unsloth/Llama-3.2-3B-Instruct](https://huggingface.co/unsloth/Llama-3.2-3B-Instruct),
@@ -70,6 +70,31 @@ fail closed. Stop consumers and explicitly delete only this dedicated cache befo
 recreating a corrupt cache. No automatic cleanup is implemented. Request logging
 is disabled in vLLM; review platform/error logs before sending sensitive data.
 
+## Observed live startup failure and corrective dependency pin
+
+Live inference logs reported vLLM 0.11.0 failing during tokenizer initialization
+with `AttributeError: TokenizersBackend has no attribute all_special_tokens_extended`.
+This is a Transformers 5.x compatibility failure: vLLM expects the older tokenizer
+API, while its unbounded Transformers dependency permits installation of 5.x.
+The serving image now installs `vllm==0.11.0` and `transformers==4.57.3` together
+to retain the compatible tokenizer API and prevent selection of Transformers 5.x.
+
+Declared compatibility was checked against the tagged
+[vLLM 0.11.0 requirements](https://github.com/vllm-project/vllm/blob/v0.11.0/requirements/common.txt)
+and [Transformers 4.57.3 setup](https://github.com/huggingface/transformers/blob/v4.57.3/setup.py):
+4.57.3 satisfies vLLM's `transformers>=4.55.2`; Transformers' required
+`tokenizers>=0.22.0,<=0.23.0` also satisfies vLLM's `tokenizers>=0.21.1`.
+Transformers requires Python >=3.9, compatible with the image's Python 3.12.
+Its `huggingface-hub>=0.34.0,<1.0` range includes 0.35.3, although the prefetch
+image and its Hub pin remain separate from the serving image.
+
+This correction preserves the cached model revision, GPU configuration,
+authentication, scaling limits, and application interfaces. It has only been
+checked offline; the corrected image has not been built or deployed and inference
+has not been retried by this change. Full transitive dependency resolution and
+GPU runtime compatibility remain unverified; these two pins are not a complete
+image lockfile.
+
 ## Offline checks (safe now)
 
 From the repository root, with the existing development environment provisioned:
@@ -80,7 +105,8 @@ git diff --check
 ```
 
 Tests replace Modal with a recording stub and HTTP with fake responses. They
-verify deployment limits, mandatory proxy authentication, subprocess arguments,
+verify exact serving and prefetch dependency pins (including exclusion of
+Transformers 5.x with vLLM 0.11.0), deployment limits, mandatory proxy authentication, subprocess arguments,
 existing environment configuration, request/envelope compatibility, and failure
 handling, cache publication ordering, interrupted downloads, failed commits, and
 missing/corrupt cache rejection, including template integrity, JSON/text validation,
@@ -91,7 +117,8 @@ They cannot validate actual SDK behavior, GPU compatibility, or edge enforcement
 
 1. Obtain explicit approval for deployment, remote downloads, and compute spend.
    Review Meta's terms and retain attribution; public availability is not a waiver.
-2. Review pinned `modal==1.6.3` and remote `vllm==0.11.0` for supported APIs,
+2. Review pinned `modal==1.6.3`, remote `vllm==0.11.0`, and
+   `transformers==4.57.3` for supported APIs,
    security fixes, dependency resolution, CUDA/L4 support, and JSON-object mode.
    Pins are a starting configuration, not a fully locked deployment image.
    Check model revision and chat template compatibility. None were GPU-tested here.

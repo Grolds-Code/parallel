@@ -32,7 +32,7 @@ def deployment(monkeypatch, tmp_path):
             return cls()
 
         def pip_install(self, *packages):
-            captured['packages'] = packages
+            self.packages = getattr(self, 'packages', ()) + packages
             return self
 
     def app(name):
@@ -63,6 +63,17 @@ def deployment(monkeypatch, tmp_path):
     for key in ('HF_HOME', 'HF_HUB_CACHE', 'HF_HUB_OFFLINE', 'TRANSFORMERS_OFFLINE'):
         monkeypatch.setenv(key, '')
     return module, captured, launches
+
+
+def test_deployment_dependency_pins(deployment):
+    module, captured, _ = deployment
+    serving_image = captured['serve:function'][1]['image']
+    assert serving_image is module.image
+    # Exact pins prevent vLLM's open-ended requirement from selecting 5.x.
+    assert serving_image.packages == ('vllm==0.11.0', 'transformers==4.57.3')
+    prefetch_image = captured['prefetch:function'][1]['image']
+    assert prefetch_image is module.prefetch_image
+    assert prefetch_image.packages == ('huggingface-hub==0.35.3',)
 
 
 def test_cost_and_authentication_limits(deployment, monkeypatch):

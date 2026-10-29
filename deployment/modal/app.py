@@ -24,7 +24,8 @@ REQUIRED = (*JSON_METADATA, CHAT_TEMPLATE)
 cache_volume = modal.Volume.from_name(CACHE_VOLUME_NAME, create_if_missing=True)
 
 # Deployment dependencies stay outside parallel-agent and its lockfile.
-image = modal.Image.debian_slim(python_version="3.12").pip_install("vllm==0.11.0")
+# vLLM 0.11.0's tokenizer initialization is incompatible with Transformers 5.x.
+image = modal.Image.debian_slim(python_version="3.12").pip_install("vllm==0.11.0", "transformers==4.57.3")
 prefetch_image = modal.Image.debian_slim(python_version="3.12").pip_install("huggingface-hub==0.35.3")
 app = modal.App(APP_NAME)
 
