@@ -370,7 +370,7 @@ proof. All connector tests run offline with mocked HTTP.
 
 A separate [Modal deployment recipe](deployment/modal/README.md) serves
 `unsloth/Llama-3.2-3B-Instruct` through authenticated OpenAI-compatible chat
-completions on one scale-to-zero L4. Its result redirects require explicit `LLMConfig` opt-in.
+completions on one scale-to-zero GPU (L4 preferred, A10 fallback). Its result redirects require explicit `LLMConfig` opt-in.
 Deployment dependencies are outside the local package; tests use fake Modal and
 HTTP implementations and never download weights or start a GPU.
 
