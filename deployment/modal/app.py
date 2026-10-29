@@ -124,7 +124,7 @@ def server_command():
 
 @app.function(
     image=image,
-    gpu="L4",
+    gpu=["L4", "A10"],
     volumes={str(CACHE_ROOT): cache_volume},
     cpu=2,
     memory=8192,

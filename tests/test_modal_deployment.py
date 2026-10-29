@@ -79,14 +79,15 @@ def test_deployment_dependency_pins(deployment):
 def test_cost_and_authentication_limits(deployment, monkeypatch):
     module, captured, launches = deployment
     settings = captured['serve:function'][1]
-    assert settings['gpu'] == 'L4'
+    assert settings['gpu'] == ['L4', 'A10']  # Ordered alternatives, one GPU per container.
+    assert settings['cpu'] == 2 and settings['memory'] == 8192
     assert settings['min_containers'] == settings['buffer_containers'] == 0
     assert settings['max_containers'] == 1
     assert 0 < settings['scaledown_window'] <= 60
     assert 0 < settings['timeout'] <= 120
     assert 0 < settings['startup_timeout'] <= 600
     assert 'retries' not in settings  # Modal Web Functions reject even retries=0.
-    assert captured['concurrent'][1] == {'max_inputs': 1}
+    assert captured['serve:concurrent'][1] == {'max_inputs': 1}
     assert captured['web_server'] == ((8000,), {
         'startup_timeout': 600, 'requires_proxy_auth': True,
     })
@@ -97,6 +98,9 @@ def test_cost_and_authentication_limits(deployment, monkeypatch):
     assert command[command.index('--chat-template') + 1] == str(module.SNAPSHOT / 'chat_template.jinja')
     assert command[command.index('--served-model-name') + 1] == module.MODEL
     assert command[command.index('--max-model-len') + 1] == '8192'
+    assert command[command.index('--dtype') + 1] == 'half'
+    assert command[command.index('--gpu-memory-utilization') + 1] == '0.80'
+    assert '--enforce-eager' in command
     assert command[command.index('--max-num-seqs') + 1] == '1'
     assert command[command.index('--revision') + 1] == module.MODEL_REVISION
     assert command[command.index('--tokenizer-revision') + 1] == module.MODEL_REVISION

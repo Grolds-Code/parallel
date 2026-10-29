@@ -24,7 +24,7 @@ is embedded in the image or command. Modal account/deployment tokens are differe
 credentials. There is no public bypass port, tunnel, or unauthenticated endpoint.
 Do not remove `requires_proxy_auth=True` or rely on vLLM's API-key flag alone.
 
-One L4, 2 CPU cores, 8 GiB host RAM; minimum containers 0, maximum 1, buffer 0,
+One GPU (L4 preferred, A10 fallback), 2 CPU cores, 8 GiB host RAM; minimum containers 0, maximum 1, buffer 0,
 30-second idle scale-down, one concurrent HTTP input and one model sequence.
 The model context is capped at 8192 tokens (prompt plus output), GPU memory use
 at 80%, with eager execution to reduce cold-start compilation. The default local
@@ -70,6 +70,29 @@ fail closed. Stop consumers and explicitly delete only this dedicated cache befo
 recreating a corrupt cache. No automatic cleanup is implemented. Request logging
 is disabled in vLLM; review platform/error logs before sending sensitive data.
 
+## Ordered GPU fallback and compatibility
+
+Repeated live requests waited over 20 minutes for L4 scheduling. Serving now uses
+`gpu=["L4", "A10"]`, Modal's documented [ordered GPU fallback](https://modal.com/docs/examples/gpu_fallbacks):
+at scale-up Modal tries the GPU types in preference order. This requests one GPU,
+not both, and keeps L4 preferred. Fallback does not guarantee availability or a
+maximum scheduling wait; both pools can be busy. It does not retry inference or
+switch GPUs inside a running container.
+
+Both choices have 24 GB GPU memory (NVIDIA specifications for
+[L4](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/l4/PB-11316-001_v01.pdf)
+and [A10](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a10/pdf/A10-Product-Brief.pdf)).
+[NVIDIA lists](https://developer.nvidia.com/cuda/gpus) L4 at compute capability 8.9
+and A10 at 8.6, above [vLLM 0.11.0's requirement](https://docs.vllm.ai/en/v0.11.0/getting_started/installation/gpu.html)
+of 7.0. Both support float16. The same Python 3.12 image, `vllm==0.11.0`,
+`transformers==4.57.3`, and `--dtype half` apply to either GPU; the tokenizer
+compatibility rationale below is unchanged. Neither choice requires quantization
+or a different model/cache revision. The approximately 6.44 GB of weights and
+single 8192-token sequence are expected to fit either GPU with the existing 80%
+GPU-memory budget and eager execution. This is a hardware-capability and memory
+estimate, not a GPU runtime test: actual usable memory, CUDA kernels, image
+resolution, and startup latency still need live validation on each GPU.
+
 ## Observed live startup failure and corrective dependency pin
 
 Live inference logs reported vLLM 0.11.0 failing during tokenizer initialization
@@ -106,7 +129,8 @@ git diff --check
 
 Tests replace Modal with a recording stub and HTTP with fake responses. They
 verify exact serving and prefetch dependency pins (including exclusion of
-Transformers 5.x with vLLM 0.11.0), deployment limits, mandatory proxy authentication, subprocess arguments,
+Transformers 5.x with vLLM 0.11.0), ordered L4/A10 allocation, float16, 8192-token context, memory budget, eager execution,
+deployment limits, mandatory proxy authentication, subprocess arguments,
 existing environment configuration, request/envelope compatibility, and failure
 handling, cache publication ordering, interrupted downloads, failed commits, and
 missing/corrupt cache rejection, including template integrity, JSON/text validation,
@@ -119,10 +143,10 @@ They cannot validate actual SDK behavior, GPU compatibility, or edge enforcement
    Review Meta's terms and retain attribution; public availability is not a waiver.
 2. Review pinned `modal==1.6.3`, remote `vllm==0.11.0`, and
    `transformers==4.57.3` for supported APIs,
-   security fixes, dependency resolution, CUDA/L4 support, and JSON-object mode.
+   security fixes, dependency resolution, CUDA/L4/A10 support, and JSON-object mode.
    Pins are a starting configuration, not a fully locked deployment image.
    Check model revision and chat template compatibility. None were GPU-tested here.
-3. Confirm the intended Modal workspace/environment, L4 quota, current pricing,
+3. Confirm the intended Modal workspace/environment, L4 and A10 quotas, current pricing,
    billing alerts, and proxy-token scope. Prefer an isolated environment; proxy
    tokens can authorize other endpoints in their scope. Keep credentials in a
    secret manager and rotate/revoke them when no longer needed.
@@ -138,13 +162,13 @@ They cannot validate actual SDK behavior, GPU compatibility, or edge enforcement
    and does not invoke GPU inference. Do not send requests to ephemeral endpoints.
 6. **GPU service deployment:** after deployment approval, run
    `modal deploy deployment/modal/app.py` in the same workspace/environment.
-   This registers the L4 service and may build images; it does not run prefetch.
+   This registers the L4-preferred/A10-fallback service and may build images; it does not run prefetch.
    With minimum containers zero, inference is a separate action. `modal serve`
    and `modal run` are remote operations, not offline checks.
 7. **Model inference (GPU billable):** Copy the actual URL emitted by Modal. Before real use, verify missing/invalid
    proxy credentials are denied on chat, health, docs, and alternate inference
    routes, without starting GPU containers. Then authorize one small synthetic
-   request to check JSON mode, finish reason, latency, L4 memory use, and timeout
+   request to check JSON mode, finish reason, latency, memory use on each GPU, and timeout
    cancellation. Confirm concurrency stays at one and containers return to zero.
    Stop the deployment if any check fails. These live checks remain unperformed.
 
@@ -213,12 +237,20 @@ Deployment scaling, startup limits, and function execution limits are unchanged.
 
 ## Compute cost and cleanup
 
-As checked on 2026-10-28, [Modal's price list](https://modal.com/pricing) lists L4
-at $0.000222/second (about $0.80/GPU-hour), CPU at $0.0000131/core-second, and
-memory at $0.00000222/GiB-second. At the requested 2 cores and 8 GiB, a rough
-combined estimate is $0.96/container-hour: 60 seconds about $0.016; 10 minutes
-about $0.16. Actual CPU/memory billing can vary. Include cache validation/loading time,
-active requests, and the idle tail; a 30-second tail alone is about $0.008.
+As checked on 2026-10-30, [Modal's price list](https://modal.com/pricing) lists:
+
+| GPU | GPU-second | GPU-hour | Estimated container-hour (2 cores, 8 GiB) |
+| --- | --- | --- | --- |
+| L4 (preferred) | $0.000222 | $0.7992 | $0.957456 |
+| A10 (fallback) | $0.000306 | $1.1016 | $1.259856 |
+
+A10 adds $0.000084/second ($0.3024/hour), about 37.8% more GPU cost or
+31.6% more estimated container cost for equal runtime. Performance can differ,
+so cost per completed request is not established. CPU is $0.0000131/core-second
+and memory $0.00000222/GiB-second. Approximate L4/A10 totals are $0.016/$0.021
+for 60 seconds and $0.160/$0.210 for 10 minutes. Actual CPU/memory billing can vary.
+Include cache validation/loading, active requests, and idle time: the 30-second
+tail alone is about $0.008/$0.0105 for L4/A10.
 CPU prefetch is billed separately: at those illustrative rates, 2 CPU cores
 and 4 GiB are about $0.126/hour (about $0.063 for the 30-minute execution limit),
 excluding builds, network, and storage. Persistent cache storage can remain
@@ -227,7 +259,7 @@ and billing behavior before deployment. No credits or free allowance are assumed
 
 Scale-to-zero removes ongoing GPU compute after idle shutdown; it is not a
 spending cap. Continuous authenticated traffic could keep the one container
-running all month (roughly $690 for 30 days at this estimate). Set account alerts
+running all month (roughly $689 on L4 or $907 on A10 for 30 days at these estimates). Set account alerts
 and stop the app when finished. Maximum containers 1 is a concurrency limit,
 not a total-dollar budget or protection against a stolen valid token.
 
@@ -253,10 +285,14 @@ The documented [function options](https://modal.com/docs/sdk/py/latest/App),
 [authenticated web server](https://modal.com/docs/sdk/py/latest/web_server), and
 [Volume API](https://modal.com/docs/sdk/py/latest/Volume) support the APIs used here.
 See [Volume persistence semantics](https://modal.com/docs/guide/volumes) for
-commit/reload behavior and background persistence. This is a documentation review,
-not a real SDK/cloud integration test. The project dependencies/lockfile stay unchanged.
+commit/reload behavior and background persistence. A real Modal 1.6.3 SDK import
+was also checked offline with network connections and subprocess launches blocked;
+both functions registered without invoking them. This validates local SDK acceptance,
+not scheduling, image builds, GPU execution, or cloud integration. The inspection
+of `App.registered_functions` emitted a deprecation warning (removal in SDK 1.7.0);
+the deployment does not use that property. The project dependencies/lockfile stay unchanged.
 
-Remaining risks: image dependency resolution and vLLM/CUDA/L4 compatibility,
+Remaining risks: image dependency resolution and vLLM/CUDA compatibility on both L4 and A10,
 model/JSON-mode compatibility, Hugging Face availability, download timeout,
 Volume throughput and full-file hash time within the startup budget, actual proxy
 enforcement, and cancellation/billing behavior need an authorized live trial.
