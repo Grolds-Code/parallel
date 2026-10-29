@@ -299,3 +299,19 @@ enforcement, and cancellation/billing behavior need an authorized live trial.
 Hashes detect changes after prefetch; they are not independent publisher signatures.
 Do not modify a published snapshot while serving. Resource limits bound concurrency
 and per-invocation duration, not total spend or persistent storage growth.
+
+### Confirmed subsequent live repair and evaluation gap
+
+The first successful live Meta Llama repair reported
+`passed_bounded_checks`, 1 repair attempt, 4 search evaluations, and 21.35 seconds.
+This supersedes the earlier transport-failure outcome for that subsequent run;
+it does not establish that all deployment validation checks above were performed.
+
+The task required creating demo-002 while preserving demo-001 and explicitly
+forbade deleting or modifying existing customers. The accepted proposal also
+replaced demo-001 with identical field values. The final-state goal missed this
+operation-level violation. The completed live round trip is confirmed, but full
+instruction compliance was not. Explicit action constraints now reject that
+proposal in offline regression tests. See the root README's action-constraint
+section for the interface and limitations. No live rerun was performed for this
+fix.

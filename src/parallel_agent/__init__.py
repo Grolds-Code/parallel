@@ -1,4 +1,5 @@
 """PARALLEL's deterministic, in-memory execution foundation."""
+from .actions import ActionCheck, ActionViolation, forbid_original_customer_operations
 from .llm import (LLMConfig, LLMConfigurationError, LLMConnector, LLMError,
                   LLMResponseError, LLMTransportError)
 from .models import (CreateCustomer, Customer, DatabaseState, DeleteCustomer,
@@ -11,6 +12,7 @@ from .verifier import (Constraint, Counterexample, VerificationResult, Violation
                        evaluate, verify)
 
 __all__ = [
+    "ActionCheck", "ActionViolation", "forbid_original_customer_operations",
     "LLMConfig", "LLMConfigurationError", "LLMConnector", "LLMError",
     "LLMResponseError", "LLMTransportError",
     "Disposition", "FailureKind", "GoalCheck", "RepairCallable", "RepairIteration",

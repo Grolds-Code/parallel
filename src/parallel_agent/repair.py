@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 from typing import Callable
 
+from .actions import ActionCheck
 from .models import DatabaseState, Proposal
 from .search import SearchResult, StateProvenance, search_counterexample
 from .verifier import VerificationResult, evaluate
@@ -16,6 +17,7 @@ class Disposition(StrEnum):
     INVALID_RESPONSE = "invalid_response"
     REPAIR_ERROR = "repair_error"
     GOAL_ERROR = "goal_error"
+    ACTION_CHECK_ERROR = "action_check_error"
 
 
 class FailureKind(StrEnum):
@@ -23,6 +25,8 @@ class FailureKind(StrEnum):
     SIMULATION_ERROR = "simulation_error"
     COUNTERFACTUAL_VULNERABILITY = "counterfactual_vulnerability"
     GOAL_NOT_MET = "goal_not_met"
+    ACTION_VIOLATION = "action_violation"
+    ACTION_CHECK_ERROR = "action_check_error"
 
 
 @dataclass(frozen=True, slots=True)
@@ -78,6 +82,7 @@ def repair_proposal(
     search_budget_per_iteration: int = 100,
     max_search_evaluations: int = 400,
     goal: GoalCheck | None = None,
+    action_check: ActionCheck | None = None,
 ) -> RepairResult:
     """Re-evaluate each proposal from the original snapshot, never a prior final state.
 
@@ -92,6 +97,8 @@ def repair_proposal(
         raise TypeError("state and proposal must be validated model instances")
     if not callable(repair) or (goal is not None and not callable(goal)):
         raise TypeError("repair and goal must be callable")
+    if action_check is not None and not callable(action_check):
+        raise TypeError("action_check must be callable")
     for name, value in (("max_repair_attempts", max_repair_attempts),
                         ("search_budget_per_iteration", search_budget_per_iteration),
                         ("max_search_evaluations", max_search_evaluations)):
@@ -115,10 +122,14 @@ def repair_proposal(
             return finish(Disposition.SEARCH_BUDGET_EXHAUSTED,
                           "Insufficient budget for a full bounded search iteration.")
         seen.add(proposal)
-        observed = evaluate(state, proposal)
+        observed = evaluate(state, proposal, action_check=action_check)
         search = search_counterexample(state, proposal, budget=search_budget_per_iteration)
         spent += search.cases_evaluated
         failures = []
+        if observed.action_violations:
+            failures.append(FailureKind.ACTION_VIOLATION)
+        if observed.action_error is not None:
+            failures.append(FailureKind.ACTION_CHECK_ERROR)
         if observed.violations:
             failures.append(FailureKind.OBSERVED_VIOLATION)
         if observed.simulation.errors:
@@ -140,6 +151,8 @@ def repair_proposal(
                 failures.append(FailureKind.GOAL_NOT_MET)
         history.append(RepairIteration(proposal, observed, search, goal_met,
                                        tuple(failures), goal_error))
+        if observed.action_error is not None:
+            return finish(Disposition.ACTION_CHECK_ERROR, observed.action_error)
         if goal_error is not None:
             return finish(Disposition.GOAL_ERROR, goal_error)
         if not failures:

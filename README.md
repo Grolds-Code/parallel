@@ -356,7 +356,8 @@ During repair, exceptions produce the existing `REPAIR_ERROR` disposition with
 no accepted proposal.
 
 Remaining limitations: endpoints must support JSON-object mode and `max_tokens`;
-compatibility has only been tested with mocked HTTP. The timeout bounds blocking
+a live Meta Llama repair round trip has completed, as recorded below; automated
+compatibility tests use mocked HTTP. The timeout bounds blocking
 socket operations; the separate monotonic total deadline is checked across hops
 and bounded body reads. OS DNS resolution and urllib header processing can delay
 reporting deadline exhaustion. Request serialization precedes its byte-limit check. LLM output is
@@ -366,7 +367,7 @@ evidence; choose an endpoint appropriate for that data. There is no persistence,
 execution, live-database freshness check, retry, streaming, or universal safety
 proof. All connector tests run offline with mocked HTTP.
 
-## Optional Modal deployment (prepared, not deployed)
+## Optional Modal deployment recipe
 
 A separate [Modal deployment recipe](deployment/modal/README.md) serves
 `unsloth/Llama-3.2-3B-Instruct` through authenticated OpenAI-compatible chat
@@ -375,3 +376,63 @@ Deployment dependencies are outside the local package; tests use fake Modal and
 HTTP implementations and never download weights or start a GPU.
 
 **Built with Llama.** See the [Meta Llama attribution](deployment/modal/Notice).
+
+## Explicit action constraints and the first live repair
+
+The first confirmed live Meta Llama repair reported
+`passed_bounded_checks`, **1 repair attempt, 4 search evaluations, and 21.35
+seconds**. This confirmed a completed live repair round trip, but exposed an
+evaluation gap: the task requested creating demo-002 while preserving demo-001
+and said “Do not delete or modify existing customers.” The accepted proposal
+contained both `CreateCustomer(demo-002)` and `ReplaceCustomer(demo-001)`, with
+identical final field values. The final-state goal passed despite the forbidden
+replacement. That historical disposition is not evidence of full task compliance.
+The fix below has been tested offline; no new live inference was performed.
+
+Keep three concerns distinct:
+
+- State invariants and protection rules describe allowed data conditions. The
+  existing verifier enforces sticky deletion protections over the simulated trace.
+- Requested goals describe task completion. The optional `goal` receives a
+  `VerificationResult` and returns a strict boolean. Final-state equality does
+  not establish that forbidden operations were avoided.
+- Action constraints describe which attempted operations are allowed, even when
+  they leave the final state unchanged.
+
+Supply an explicit trusted action checker independently of the goal:
+
+```python
+from parallel_agent import forbid_original_customer_operations
+
+result = repair_proposal(
+    state, proposal, offline_repair,
+    goal=goal,
+    action_check=forbid_original_customer_operations,
+)
+# Also supported by evaluate(state, proposal, action_check=...) and verify(...).
+```
+
+An `ActionCheck` receives the immutable `Simulation` and returns a tuple of
+`ActionViolation(constraint, operation_index, customer_id, message)`. Empty means
+no action violations. Custom checkers should be pure and deterministic. The
+built-in helper forbids **every attempted operation** targeting an ID present in
+the original snapshot, including identical replacements, failed operations, and
+delete/recreate sequences. It permits operations on new IDs. Every repair is
+checked against the same original snapshot; protection is never derived from an
+intermediate or final state.
+
+Action evidence is separate from deletion violations:
+`VerificationResult.action_violations` and `action_error` affect `is_safe`.
+Repair history and connector prompts include that evidence and separate failure
+kinds. A violation triggers repair if budget permits. Exceptions, malformed
+checker results, and evidence referencing a nonexistent operation or mismatched
+ID terminate with `action_check_error` and no accepted proposal. As with goal
+checker errors, a broken checker is not delegated to the proposal repair callback.
+
+Action checks run on the observed simulation, independently of bounded search,
+which continues to search deletion protections only. They consume no search
+evaluations. Acceptance requires all supplied action constraints to pass, as
+well as existing checks and any goal. Omitting `action_check` preserves existing
+behavior. Task text is not automatically translated into constraints: callers
+must supply the policy. Trusted callbacks are not sandboxed, and their logical
+correctness or determinism cannot be guaranteed by this interface.

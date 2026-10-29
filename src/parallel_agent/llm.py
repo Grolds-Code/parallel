@@ -168,6 +168,8 @@ def _history(request):
                 "simulated_final_state": asdict(step.observed_evaluation.simulation.final_state),
             },
             "observed_violations": [asdict(v) for v in step.observed_evaluation.violations],
+            "action_violations": [asdict(v) for v in step.observed_evaluation.action_violations],
+            "action_error": step.observed_evaluation.action_error,
             "simulation_errors": [asdict(c) for c in step.observed_evaluation.simulation.errors],
             "counterfactual_witness": serialized if witness is not None and
                 witness.state_provenance is StateProvenance.COUNTERFACTUAL_STATE else None,

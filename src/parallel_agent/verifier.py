@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 from enum import StrEnum
 
+from .actions import ActionCheck, ActionViolation
 from .models import Customer, DatabaseState, DeleteCustomer, Proposal
 from .simulator import Simulation, simulate
 
@@ -33,6 +34,8 @@ class Violation:
 class VerificationResult:
     simulation: Simulation
     violations: tuple[Violation, ...]
+    action_violations: tuple[ActionViolation, ...] = ()
+    action_error: str | None = None
 
     @property
     def counterexamples(self) -> tuple[Counterexample, ...]:
@@ -44,10 +47,11 @@ class VerificationResult:
 
         Scoped to this state and proposal, not real-world execution approval.
         """
-        return not self.violations and not self.simulation.errors
+        return (not self.violations and not self.simulation.errors
+                and not self.action_violations and self.action_error is None)
 
 
-def verify(simulation: Simulation) -> VerificationResult:
+def verify(simulation: Simulation, *, action_check: ActionCheck | None = None) -> VerificationResult:
     """Protect any record observed with a protection flag during this proposal.
 
     "Observed" means encountered in the simulation, including hypothetical
@@ -79,9 +83,26 @@ def verify(simulation: Simulation) -> VerificationResult:
                     violations.append(Violation(constraint, change.customer_id,
                                                 change.operation_index, example))
         observe(change.after)
-    return VerificationResult(simulation, tuple(violations))
+    action_violations = ()
+    action_error = None
+    if action_check is not None:
+        try:
+            action_violations = action_check(simulation)
+            if type(action_violations) is not tuple or any(
+                    type(v) is not ActionViolation for v in action_violations):
+                raise TypeError("action_check must return a tuple of ActionViolation")
+            for violation in action_violations:
+                if (violation.operation_index >= len(simulation.changes) or
+                        simulation.changes[violation.operation_index].customer_id !=
+                        violation.customer_id):
+                    raise ValueError("action violation must identify an attempted operation")
+        except Exception as exc:
+            action_violations = ()
+            action_error = f"{type(exc).__name__}: {exc}"
+    return VerificationResult(simulation, tuple(violations), action_violations, action_error)
 
 
-def evaluate(state: DatabaseState, proposal: Proposal) -> VerificationResult:
+def evaluate(state: DatabaseState, proposal: Proposal, *,
+             action_check: ActionCheck | None = None) -> VerificationResult:
     """Trusted entry point: simulate a proposal and verify its complete trace."""
-    return verify(simulate(state, proposal))
+    return verify(simulate(state, proposal), action_check=action_check)
