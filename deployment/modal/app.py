@@ -133,7 +133,6 @@ def server_command():
     scaledown_window=30,
     timeout=REQUEST_TIMEOUT,
     startup_timeout=STARTUP_TIMEOUT,
-    retries=0,
 )
 @modal.concurrent(max_inputs=1)
 @modal.web_server(PORT, startup_timeout=STARTUP_TIMEOUT, requires_proxy_auth=True)

@@ -67,14 +67,14 @@ def deployment(monkeypatch, tmp_path):
 
 def test_cost_and_authentication_limits(deployment, monkeypatch):
     module, captured, launches = deployment
-    settings = captured['function'][1]
+    settings = captured['serve:function'][1]
     assert settings['gpu'] == 'L4'
     assert settings['min_containers'] == settings['buffer_containers'] == 0
     assert settings['max_containers'] == 1
     assert 0 < settings['scaledown_window'] <= 60
     assert 0 < settings['timeout'] <= 120
     assert 0 < settings['startup_timeout'] <= 600
-    assert settings['retries'] == 0
+    assert 'retries' not in settings  # Modal Web Functions reject even retries=0.
     assert captured['concurrent'][1] == {'max_inputs': 1}
     assert captured['web_server'] == ((8000,), {
         'startup_timeout': 600, 'requires_proxy_auth': True,
@@ -168,6 +168,7 @@ def test_cpu_prefetch_and_shared_volume(deployment, monkeypatch):
     assert cpu['gpu'] is None
     assert cpu['cpu'] == 2 and cpu['memory'] == 4096
     assert cpu['min_containers'] == cpu['buffer_containers'] == cpu['retries'] == 0
+    assert 'prefetch:web_server' not in captured
     assert cpu['max_containers'] == 1 and cpu['timeout'] == 1800
     assert captured['prefetch:concurrent'][1] == {'max_inputs': 1}
     calls = fake_download(module, monkeypatch)
