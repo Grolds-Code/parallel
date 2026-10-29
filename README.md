@@ -341,3 +341,13 @@ task correctness or authorization. Providers receive tasks, snapshots, and repai
 evidence; choose an endpoint appropriate for that data. There is no persistence,
 execution, live-database freshness check, retry, streaming, or universal safety
 proof. All connector tests run offline with mocked HTTP.
+
+## Optional Modal deployment (prepared, not deployed)
+
+A separate [Modal deployment recipe](deployment/modal/README.md) serves
+`unsloth/Llama-3.2-3B-Instruct` through authenticated OpenAI-compatible chat
+completions on one scale-to-zero L4. It uses the existing `LLMConfig` unchanged.
+Deployment dependencies are outside the local package; tests use fake Modal and
+HTTP implementations and never download weights or start a GPU.
+
+**Built with Llama.** See the [Meta Llama attribution](deployment/modal/Notice).

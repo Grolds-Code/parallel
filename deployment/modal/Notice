@@ -1,0 +1,10 @@
+Built with Llama
+
+Llama 3.2 is licensed under the Llama 3.2 Community License, Copyright © Meta Platforms, Inc. All Rights Reserved.
+
+Model source: https://huggingface.co/unsloth/Llama-3.2-3B-Instruct
+Meta license: https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE
+Acceptable Use Policy: https://www.llama.com/llama3_2/use-policy
+
+This repository contains deployment code, not model weights. Retain this Notice
+and provide the full Meta license with any redistributed Llama Materials.
