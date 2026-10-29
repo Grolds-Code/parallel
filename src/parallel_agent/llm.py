@@ -6,6 +6,7 @@ import json
 import math
 import os
 import socket
+import time
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
@@ -41,6 +42,9 @@ class LLMConfig:
     max_request_bytes: int = 1_048_576
     max_operations: int = 100
     max_tokens: int = 4096
+    modal_result_redirects: bool = False
+    total_timeout_seconds: float | None = None
+    max_result_redirects: int = 20
 
     def __post_init__(self):
         for name in ("base_url", "model", "api_key"):
@@ -69,7 +73,15 @@ class LLMConfig:
         if (type(self.timeout_seconds) not in (int, float) or
                 not math.isfinite(self.timeout_seconds) or self.timeout_seconds <= 0):
             raise LLMConfigurationError("timeout_seconds must be positive and finite")
-        for name in ("max_response_bytes", "max_request_bytes", "max_operations", "max_tokens"):
+        if type(self.modal_result_redirects) is not bool:
+            raise LLMConfigurationError("modal_result_redirects must be a boolean")
+        if self.modal_result_redirects and url.scheme != "https":
+            raise LLMConfigurationError("Modal result redirects require HTTPS")
+        if self.total_timeout_seconds is not None and (
+                type(self.total_timeout_seconds) not in (int, float) or
+                not math.isfinite(self.total_timeout_seconds) or self.total_timeout_seconds <= 0):
+            raise LLMConfigurationError("total_timeout_seconds must be positive and finite")
+        for name in ("max_result_redirects", "max_response_bytes", "max_request_bytes", "max_operations", "max_tokens"):
             if type(getattr(self, name)) is not int or getattr(self, name) <= 0:
                 raise LLMConfigurationError(f"{name} must be a positive integer")
 
@@ -236,24 +248,7 @@ class LLMConnector:
         request = Request(config.base_url.rstrip("/") + "/chat/completions", data=body,
                           headers={"Authorization": "Bearer " + config.api_key,
                                    "Content-Type": "application/json", "Accept": "application/json"})
-        try:
-            with build_opener(_NoRedirect()).open(request, timeout=config.timeout_seconds) as response:
-                if response.status != 200:
-                    raise LLMTransportError(f"LLM endpoint returned HTTP {response.status}")
-                raw = response.read(config.max_response_bytes + 1)
-        except HTTPError as exc:
-            status = exc.code
-            exc.close()
-            raise LLMTransportError(f"LLM endpoint returned HTTP {status}") from None
-        except (TimeoutError, socket.timeout):
-            raise LLMTransportError("LLM request timed out") from None
-        except URLError as exc:
-            message = "LLM request timed out" if isinstance(exc.reason, TimeoutError) else "LLM connection failed"
-            raise LLMTransportError(message) from None
-        except (OSError, HTTPException):
-            raise LLMTransportError("LLM connection failed") from None
-        if len(raw) > config.max_response_bytes:
-            raise LLMResponseError("Response exceeds configured byte limit")
+        raw = self._transport(request)
         envelope = _strict_json(raw)
         try:
             choices = envelope["choices"]
@@ -270,3 +265,90 @@ class LLMConnector:
         except (KeyError, TypeError, ValueError, AttributeError):
             raise LLMResponseError("Expected one complete assistant JSON response without tool calls or refusal") from None
         return _parse_proposal(content, config.max_operations)
+
+    def _transport(self, request):
+        config = self.config
+        original = urlsplit(request.full_url)
+        total_timeout = (config.timeout_seconds if config.total_timeout_seconds is None
+                         else config.total_timeout_seconds)
+        deadline = time.monotonic() + total_timeout
+        opener = build_opener(_NoRedirect())
+        hops = 0
+
+        def remaining():
+            value = deadline - time.monotonic()
+            if value <= 0:
+                raise LLMTransportError("LLM request timed out")
+            return min(config.timeout_seconds, value)
+
+        try:
+            while True:
+                try:
+                    response = opener.open(request, timeout=remaining())
+                except HTTPError as exc:
+                    response = exc
+                with response:
+                    remaining()
+                    status = response.code if isinstance(response, HTTPError) else response.status
+                    if status == 303 and config.modal_result_redirects:
+                        if hops >= config.max_result_redirects:
+                            raise LLMTransportError("Modal result redirect limit exceeded")
+                        headers = response.headers
+                        locations = (headers.get_all("Location", []) if hasattr(headers, "get_all")
+                                     else [headers.get("Location")])
+                        if len(locations) != 1:
+                            raise LLMTransportError("Invalid Modal result redirect")
+                        location = self._result_url(original, locations[0])
+                        # GET resumes the existing input; never replay the POST body.
+                        request = Request(location, method="GET", headers={
+                            "Authorization": "Bearer " + config.api_key,
+                            "Accept": "application/json"})
+                        hops += 1
+                        continue
+                    if status != 200:
+                        raise LLMTransportError(f"LLM endpoint returned HTTP {status}")
+                    chunks = []
+                    size = 0
+                    while True:
+                        timeout = remaining()
+                        # Refresh urllib's response socket timeout as the budget shrinks.
+                        fp = getattr(response, "fp", None)
+                        sock = getattr(getattr(fp, "raw", None), "_sock", None)
+                        if sock is not None:
+                            sock.settimeout(timeout)
+                        read = getattr(response, "read1", response.read)
+                        chunk = read(min(65536, config.max_response_bytes + 1 - size))
+                        remaining()
+                        size += len(chunk)
+                        if size > config.max_response_bytes:
+                            raise LLMResponseError("Response exceeds configured byte limit")
+                        if not chunk:
+                            return b"".join(chunks)
+                        chunks.append(chunk)
+        except (TimeoutError, socket.timeout):
+            raise LLMTransportError("LLM request timed out") from None
+        except URLError as exc:
+            message = "LLM request timed out" if isinstance(exc.reason, TimeoutError) else "LLM connection failed"
+            raise LLMTransportError(message) from None
+        except (OSError, HTTPException, ValueError):
+            raise LLMTransportError("LLM connection failed") from None
+
+    @staticmethod
+    def _result_url(original, location):
+        valid = False
+        if (isinstance(location, str) and location and
+                not any(c.isspace() or ord(c) < 32 or ord(c) == 127 for c in location) and
+                "\\" not in location and "#" not in location):
+            try:
+                target = urlsplit(location)
+                valid = (target.scheme == original.scheme == "https" and
+                         target.hostname == original.hostname and
+                         (target.port if target.port is not None else 443) ==
+                         (original.port if original.port is not None else 443) and
+                         target.path == original.path and bool(target.query) and
+                         target.username is None and target.password is None)
+            except ValueError:
+                pass
+        if not valid:
+            raise LLMTransportError("Invalid Modal result redirect")
+        return location

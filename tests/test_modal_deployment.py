@@ -125,7 +125,7 @@ def test_existing_connector_modal_contract(deployment, monkeypatch, status):
             assert body['response_format'] == {'type': 'json_object'}
             assert body['max_tokens'] == 4096
             assert [m['role'] for m in body['messages']] == ['system', 'user']
-            assert timeout == 30
+            assert 0 < timeout <= 30
             if status != 200:
                 raise HTTPError(request.full_url, status, 'redacted', {}, None)
             return Response(json.dumps({'choices': [{

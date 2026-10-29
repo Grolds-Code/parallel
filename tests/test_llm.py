@@ -6,6 +6,7 @@ from urllib.error import HTTPError, URLError
 
 import pytest
 
+import parallel_agent.llm as llm
 from parallel_agent import (
     Customer, DatabaseState, DeleteCustomer, Disposition, Proposal, repair_proposal,
 )
@@ -66,7 +67,7 @@ def test_initial_all_operations_and_request(http):
     request, timeout = calls[0]
     assert request.full_url == "https://inference.invalid/v1/chat/completions"
     assert request.get_header("Authorization") == "Bearer test-credential"
-    assert timeout == 30
+    assert 0 < timeout <= 30
     payload = json.loads(request.data)
     assert payload["model"] == "test-model"
     assert payload["stream"] is False
@@ -319,3 +320,195 @@ def test_redirect_handler_blocks_every_redirect(code):
                       headers={"Authorization": "Bearer " + CONFIG.api_key})
     assert _NoRedirect().redirect_request(
         request, None, code, "redirect", {}, "http://other.invalid") is None
+
+
+MODAL = replace(CONFIG, modal_result_redirects=True, total_timeout_seconds=2100,
+                timeout_seconds=180)
+RESULT = CONFIG.base_url + '/chat/completions?__modal_result=opaque'
+
+
+def redirect(location=RESULT, code=303):
+    return HTTPError(CONFIG.base_url, code, 'secret', {'Location': location}, io.BytesIO(b'secret'))
+
+
+@pytest.mark.parametrize('count', [1, 3])
+def test_modal_results_resume_with_get(http, count):
+    calls, responses, queue = http
+    redirects = [redirect(RESULT + str(i)) for i in range(count)]
+    responses.extend(redirects)
+    queue()
+    assert LLMConnector(MODAL).generate('goal', DatabaseState()).operations
+    assert calls[0][0].get_method() == 'POST'
+    assert calls[0][0].data
+    for i, (request, timeout) in enumerate(calls[1:]):
+        assert request.full_url == RESULT + str(i)
+        assert request.get_method() == 'GET'
+        assert request.data is None
+        assert request.get_header('Content-type') is None
+        assert request.get_header('Authorization') == 'Bearer ' + CONFIG.api_key
+        assert timeout <= 180
+    assert all(response.fp.closed for response in redirects)
+
+
+@pytest.mark.parametrize('location', [
+    None, '', '?result=secret', '/v1/chat/completions?result=secret',
+    RESULT.replace('https:', 'http:'), RESULT.replace('inference.invalid', 'evil.invalid'),
+    RESULT.replace('inference.invalid', 'inference.invalid.evil.invalid'),
+    RESULT.replace('inference.invalid', 'user:secret@inference.invalid'),
+    RESULT.replace('inference.invalid', '@inference.invalid'),
+    RESULT.replace('inference.invalid', 'inference.invalid:444'),
+    RESULT.replace('inference.invalid', 'inference.invalid:0'),
+    RESULT.replace('inference.invalid', 'inference.invalid:bad'),
+    RESULT.replace('/chat/completions', '/other'),
+    RESULT.replace('/chat/completions', '/chat/../chat/completions'),
+    RESULT.split('?')[0], RESULT.split('?')[0] + '?',
+    RESULT + '#', RESULT + '#secret', RESULT + '\n', RESULT + '\\secret',
+    ' https://inference.invalid/v1/chat/completions?secret',
+])
+def test_modal_malicious_locations_never_receive_credentials(http, location):
+    http[1].append(redirect(location))
+    with pytest.raises(LLMTransportError, match='Invalid Modal result redirect') as caught:
+        LLMConnector(MODAL).generate('goal', DatabaseState())
+    assert len(http[0]) == 1
+    assert 'secret' not in str(caught.value)
+    assert CONFIG.api_key not in str(caught.value)
+
+
+@pytest.mark.parametrize('code', [301, 302, 307, 308])
+def test_modal_ordinary_redirects_rejected(http, code):
+    http[1].append(redirect(code=code))
+    with pytest.raises(LLMTransportError, match=f'HTTP {code}'):
+        LLMConnector(MODAL).generate('goal', DatabaseState())
+    assert len(http[0]) == 1
+
+
+def test_modal_opt_in_required(http):
+    http[1].append(redirect())
+    with pytest.raises(LLMTransportError, match='HTTP 303'):
+        LLMConnector(CONFIG).generate('goal', DatabaseState())
+    assert len(http[0]) == 1
+
+
+def test_modal_hop_limit(http):
+    http[1].extend([redirect(), redirect()])
+    with pytest.raises(LLMTransportError, match='redirect limit'):
+        LLMConnector(replace(MODAL, max_result_redirects=1)).generate('goal', DatabaseState())
+    assert len(http[0]) == 2
+
+
+@pytest.mark.parametrize('ticks', [[0, 0, 2101], [0, 0, 150, 2101],
+                                    [0, 0, 150, 150, 300, 300, 2101]])
+def test_modal_total_deadline(http, monkeypatch, ticks):
+    clock = iter(ticks)
+    monkeypatch.setattr('parallel_agent.llm.time.monotonic', lambda: next(clock))
+    http[1].append(redirect())
+    http[2]()
+    with pytest.raises(LLMTransportError, match='timed out'):
+        LLMConnector(MODAL).generate('goal', DatabaseState())
+
+
+def test_modal_effective_https_port(http):
+    http[1].append(redirect(RESULT.replace('inference.invalid', 'inference.invalid:443')))
+    http[2]()
+    LLMConnector(MODAL).generate('goal', DatabaseState())
+
+
+@pytest.mark.parametrize('kwargs', [
+    {'modal_result_redirects': 1}, {'total_timeout_seconds': True},
+    {'total_timeout_seconds': 0}, {'total_timeout_seconds': float('inf')},
+    {'max_result_redirects': 0}, {'max_result_redirects': True},
+    {'modal_result_redirects': True, 'base_url': 'http://127.0.0.1/v1'},
+])
+def test_modal_config_validation(kwargs):
+    with pytest.raises(LLMConfigurationError):
+        replace(CONFIG, **kwargs)
+
+
+def test_modal_duplicate_locations(http):
+    from email.message import Message
+    headers = Message()
+    headers.add_header('Location', RESULT)
+    headers.add_header('Location', RESULT)
+    http[1].append(HTTPError(CONFIG.base_url, 303, 'secret', headers, None))
+    with pytest.raises(LLMTransportError, match='Invalid Modal'):
+        LLMConnector(MODAL).generate('goal', DatabaseState())
+    assert len(http[0]) == 1
+
+
+def test_modal_response_limit_after_redirect(http):
+    http[1].extend([redirect(), b'x' * 101])
+    with pytest.raises(LLMResponseError, match='Response exceeds'):
+        LLMConnector(replace(MODAL, max_response_bytes=100)).generate('goal', DatabaseState())
+    assert len(http[0]) == 2
+
+
+def test_modal_socket_timeout_not_retried(http):
+    http[1].extend([redirect(), URLError(TimeoutError('secret'))])
+    with pytest.raises(LLMTransportError, match='timed out') as caught:
+        LLMConnector(MODAL).generate('goal', DatabaseState())
+    assert 'secret' not in str(caught.value)
+    assert len(http[0]) == 2
+    assert all(timeout <= 180 for _, timeout in http[0])
+
+
+@pytest.mark.parametrize('total', [2100, 2400])
+def test_remaining_deadline_caps_next_socket(http, monkeypatch, total):
+    elapsed = total - 50
+    ticks = iter([0, 0, elapsed, elapsed, elapsed + 1, elapsed + 1,
+                  elapsed + 2, elapsed + 2, elapsed + 3])
+    monkeypatch.setattr('parallel_agent.llm.time.monotonic', lambda: next(ticks))
+    http[1].append(redirect())
+    http[2]()
+    LLMConnector(replace(MODAL, total_timeout_seconds=total)).generate('goal', DatabaseState())
+    assert [timeout for _, timeout in http[0]] == [180, 50]
+
+
+@pytest.mark.parametrize('total', [None, 2400, 15.5])
+def test_legacy_and_explicit_total_deadlines(http, monkeypatch, total):
+    config = replace(CONFIG, timeout_seconds=240, total_timeout_seconds=total)
+    assert CONFIG.total_timeout_seconds is None
+    budget = 240 if total is None else total
+    now = [0.0]
+    monkeypatch.setattr('parallel_agent.llm.time.monotonic', lambda: now[0])
+    build_opener = llm.build_opener
+
+    def slow_opener(*handlers):
+        opener = build_opener(*handlers)
+        original_open = opener.open
+
+        def open_response(request, timeout):
+            response = original_open(request, timeout)
+            now[0] += min(60, budget - 1)
+            return response
+
+        opener.open = open_response
+        return opener
+
+    monkeypatch.setattr('parallel_agent.llm.build_opener', slow_opener)
+    http[2]()
+    assert LLMConnector(config).generate('goal', DatabaseState()).operations
+    assert http[0][0][1] == min(240, budget)
+    assert config.modal_result_redirects is False
+
+
+@pytest.mark.parametrize('total,budget', [(None, 240), (2400, 2400)])
+def test_total_deadline_exhausted_across_redirect_chain(http, monkeypatch, total, budget):
+    config = replace(MODAL, timeout_seconds=240, total_timeout_seconds=total)
+    # Each response consumes part of one shared budget, never a fresh deadline.
+    ticks = iter([0, 0, budget - 120, budget - 120,
+                  budget - 60, budget - 60, budget])
+    monkeypatch.setattr('parallel_agent.llm.time.monotonic', lambda: next(ticks))
+    redirects = [redirect(), redirect(), redirect()]
+    http[1].extend(redirects)
+    with pytest.raises(LLMTransportError, match='^LLM request timed out$'):
+        LLMConnector(config).generate('goal', DatabaseState())
+    assert [timeout for _, timeout in http[0]] == [240, 120, 60]
+    assert [request.get_method() for request, _ in http[0]] == ['POST', 'GET', 'GET']
+    assert all(response.fp.closed for response in redirects)
+
+
+@pytest.mark.parametrize('total', [True, False, 0, -1, float('nan'),
+                                  float('inf'), float('-inf'), '2400'])
+def test_explicit_total_deadline_must_be_positive_and_finite(total):
+    with pytest.raises(LLMConfigurationError, match='total_timeout_seconds'):
+        replace(CONFIG, total_timeout_seconds=total)

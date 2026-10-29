@@ -38,8 +38,8 @@ queue/startup deadline. The connector defaults to a 30-second socket timeout,
 which can expire during cold starts; disconnects are not guaranteed to immediately
 stop GPU work. Modal's separate
 [HTTP timeout/redirect behavior](https://modal.com/docs/guide/webhook-timeouts)
-also applies. The connector deliberately rejects redirects. Do not enable
-redirect following or retry loops to hide cold-start failures.
+also applies. Redirects remain disabled by default. The explicit Modal result
+redirect option below resumes an existing request without submitting inference again.
 
 One dedicated named Volume, `parallel-llama-hf-cache`, is mounted at `/hf-cache`
 in both functions. Existing project volumes are neither mounted nor modified.
@@ -160,11 +160,56 @@ export PARALLEL_LLM_API_KEY
 ```
 
 `LLMConfig.from_env()` uses these three variables directly. The URL includes
-`/v1` but excludes `/chat/completions`. For a deliberately longer client timeout,
-use `dataclasses.replace(LLMConfig.from_env(), timeout_seconds=140)`; there is no
-timeout environment variable. This still may not span cold cache validation/model loading or queueing,
-and is a socket timeout, not a strict total deadline. Calls are explicit and may
-cost money. Do not run the README's connector example as an offline check.
+`/v1` but excludes `/chat/completions`. Redirects are not enabled by environment
+variables. For this Modal endpoint, configure the connector explicitly:
+
+```python
+from dataclasses import replace
+from parallel_agent import LLMConfig, LLMConnector
+
+config = replace(
+    LLMConfig.from_env(),
+    modal_result_redirects=True,
+    timeout_seconds=180,
+    total_timeout_seconds=2400,
+    max_result_redirects=20,
+)
+connector = LLMConnector(config)
+```
+
+This only constructs a connector; calling it can incur GPU charges. The explicit
+40-minute total budget allows scheduling longer than the observed 26 minutes.
+The socket timeout remains independently bounded at 180 seconds, allowing Modal's
+150-second HTTP interval; increasing the total budget never increases the socket
+timeout. When `total_timeout_seconds` is omitted (`None`), the total budget inherits
+`timeout_seconds`; both effective budgets default to 30 seconds.
+
+### Observed live repair transport failure
+
+In the reported live repair incident, GPU scheduling took about 26 minutes and
+vLLM initialized, but the original client rejected HTTP 303. Initialization did
+not establish successful completion of the repair request. Modal documents that
+a Web Function can return 303 after 150 seconds with the original URL plus a
+special result query parameter. GET of that URL resumes the original request;
+resubmitting the POST would create a new inference request.
+
+The opt-in mechanism accepts only absolute HTTPS 303 result URLs matching the
+original scheme, hostname, effective port and exact path, with a nonempty query.
+It rejects credentials, fragments (including empty fragments), alternate paths,
+cross-origin destinations, duplicate Location headers and ordinary redirects.
+It treats Modal's result query as opaque rather than depending on an undocumented
+parameter name. Authentication is sent only after origin validation. Follow-up
+requests use GET with no POST body. No general redirect handling or retries are
+enabled. Redirect bodies are closed without being read; the JSON response retains
+its byte cap. A hop cap and monotonic deadline span all result retrievals; each
+socket operation is capped by the remaining budget and the socket timeout.
+
+Offline tests cover this transport protocol; no live inference was performed for
+this fix. Python/OS DNS resolution and urllib response-header processing cannot
+be forcibly interrupted by the monotonic checks; they can delay reporting a
+deadline failure. Body reads check the deadline between bounded `read1` calls.
+A client timeout does not guarantee cancellation of remote GPU work or billing.
+Deployment scaling, startup limits, and function execution limits are unchanged.
 
 ## Compute cost and cleanup
 

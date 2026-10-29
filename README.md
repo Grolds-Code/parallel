@@ -326,7 +326,30 @@ observed simulations can introduce proposed facts that are not real observations
 `max_response_bytes` (262144), `max_request_bytes` (1048576),
 `max_operations` (100), and `max_tokens` (4096). Response reads have a hard byte
 cap; oversized requests fail without silently dropping evidence. Redirects are
-disabled to prevent credential forwarding. There are no automatic retries.
+disabled by default. Explicit `modal_result_redirects=True` permits only verified
+same-origin HTTPS 303 result retrievals using GET without replaying the POST.
+`total_timeout_seconds` (default `None`, inheriting `timeout_seconds`) bounds the
+elapsed transport budget and
+`max_result_redirects` (20) caps result hops. See the
+[Modal configuration and incident notes](deployment/modal/README.md#observed-live-repair-transport-failure).
+There are no automatic retries.
+
+For Modal, configure a 40-minute total deadline with a separate bounded socket
+timeout (constructing the connector does not send a request):
+
+```python
+from dataclasses import replace
+from parallel_agent import LLMConfig, LLMConnector
+
+connector = LLMConnector(replace(
+    LLMConfig.from_env(),
+    modal_result_redirects=True,
+    timeout_seconds=180,
+    total_timeout_seconds=2400,
+    max_result_redirects=20,
+))
+```
+
 Configuration, transport, and response failures have distinct `LLMError`
 subclasses with sanitized messages omitting response bodies and credentials.
 During repair, exceptions produce the existing `REPAIR_ERROR` disposition with
@@ -334,8 +357,9 @@ no accepted proposal.
 
 Remaining limitations: endpoints must support JSON-object mode and `max_tokens`;
 compatibility has only been tested with mocked HTTP. The timeout bounds blocking
-socket operations, not a strict total deadline (including DNS and slow trickle
-responses). Request serialization precedes its byte-limit check. LLM output is
+socket operations; the separate monotonic total deadline is checked across hops
+and bounded body reads. OS DNS resolution and urllib header processing can delay
+reporting deadline exhaustion. Request serialization precedes its byte-limit check. LLM output is
 not deterministic even at temperature zero. Schema validity does not establish
 task correctness or authorization. Providers receive tasks, snapshots, and repair
 evidence; choose an endpoint appropriate for that data. There is no persistence,
@@ -346,7 +370,7 @@ proof. All connector tests run offline with mocked HTTP.
 
 A separate [Modal deployment recipe](deployment/modal/README.md) serves
 `unsloth/Llama-3.2-3B-Instruct` through authenticated OpenAI-compatible chat
-completions on one scale-to-zero L4. It uses the existing `LLMConfig` unchanged.
+completions on one scale-to-zero L4. Its result redirects require explicit `LLMConfig` opt-in.
 Deployment dependencies are outside the local package; tests use fake Modal and
 HTTP implementations and never download weights or start a GPU.
 
