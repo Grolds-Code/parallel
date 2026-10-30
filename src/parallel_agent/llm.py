@@ -182,6 +182,43 @@ def _history(request):
     return history
 
 
+def repair_context_v2(request):
+    """Concise latest evidence for the model; full immutable history stays in reports."""
+    step = request.evidence
+    observed = step.observed_evaluation
+    witness = step.search.witness
+    return {
+        "forbidden_operation_indices": sorted({v.operation_index for v in observed.action_violations}),
+        "violated_policies": sorted({v.constraint for v in observed.action_violations}),
+        "observed_failures": {
+            "violations": [asdict(v) for v in observed.violations],
+            "simulation_errors": [{"operation_index": c.operation_index, "error": c.error}
+                                  for c in observed.simulation.errors],
+            "goal_met": step.goal_met,
+        },
+        "instruction": (
+            "Produce a revised JSON proposal now. Remove unauthorized unnecessary operations, "
+            "including identical replacements. Preserve legitimate actions needed for the target. "
+            "Never treat goal achievement as permission to violate an action policy. "
+            "Operation indices are zero-based. Counterfactual assumptions are hypothetical, "
+            "not observed facts. One repair response is allowed now; the additional generation "
+            "count applies only after this response."),
+        "mode": "repair",
+        "feedback_version": 2,
+        "previous_proposal": _proposal(step.proposal),
+        "current_repair_response_allowed": True,
+        "attempt": request.attempt,
+        "additional_generations_after_this_response": request.attempts_remaining,
+        "search_evaluations_remaining": request.search_evaluations_remaining,
+        "counterfactual_witness": ({
+            "state_provenance": witness.state_provenance,
+            "initial_state": asdict(witness.initial_state),
+            "violations": [asdict(v) for v in witness.violations],
+        } if witness is not None and
+              witness.state_provenance is StateProvenance.COUNTERFACTUAL_STATE else None),
+    }
+
+
 class _NoRedirect(HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         return None

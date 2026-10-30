@@ -46,7 +46,7 @@ class RepairRequest:
     supplied_state: DatabaseState
     history: tuple[RepairIteration, ...]
     attempt: int
-    attempts_remaining: int
+    attempts_remaining: int  # Additional callbacks AFTER the currently allowed response.
     search_evaluations_remaining: int
 
     @property

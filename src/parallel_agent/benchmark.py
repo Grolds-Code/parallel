@@ -15,6 +15,24 @@ DEFAULT_CASES = Path(__file__).resolve().parents[2] / 'benchmarks/customer_manag
 FIELDS = {'goal_met', 'observed_violations', 'action_policy_failures', 'simulation_errors'}
 
 
+def task_payload(case):
+    """Canonical exact model task: preserve array order and all field values."""
+    return json.dumps({k: case[k] for k in ('task', 'initial', 'target', 'policy')},
+                      sort_keys=True, separators=(',', ':'), ensure_ascii=True, allow_nan=False)
+
+
+def task_hash(case):
+    return hashlib.sha256(task_payload(case).encode('utf-8')).hexdigest()
+
+
+def duplicate_tasks(cases):
+    groups = {}
+    for case in cases:
+        groups.setdefault(task_hash(case), []).append(case['id'])
+    return [{'task_sha256': key, 'case_ids': ids} for key, ids in sorted(groups.items())
+            if len(ids) > 1]
+
+
 def proposal_data(proposal):
     return {'operations': [asdict(op) for op in proposal.operations]}
 
@@ -173,6 +191,8 @@ def run(cases, digest, *, search_budget=16, clock=None):
                      'latency_seconds':clock()-start if clock else None})
     return {'schema_version':1, 'mode':'offline_scripted_fixture_replay', 'model_results':False,
             'case_sha256':digest, 'search_budget_per_iteration':search_budget,
+            'distinct_model_tasks':len({task_hash(c) for c in cases}),
+            'duplicate_task_groups':duplicate_tasks(cases),
             'summary':summarize(rows), 'rows':rows}
 
 

@@ -1,6 +1,6 @@
 # PARALLEL customer-management evaluation v1
 
-Status: **offline fixtures only; no model experiment has been run by this harness.**
+Status: **the fixture benchmark is offline; the completed live pilot v1 is historical development evidence.**
 No improvement claim follows from a scripted probe-to-reference transition.
 
 ## Run and artifacts
@@ -136,12 +136,12 @@ accepted candidate. Store secrets outside artifacts. If the experiment runner or
 checker fails, fail closed and retain the error record. The benchmark module remains a fixture runner; the separate pilot below implements
 a smaller explicitly opted-in experiment.
 
-## Strictly capped four-case pilot preparation
+## Historical v1 pilot (frozen baseline)
 
 `python -m parallel_agent.pilot` produces a deterministic offline plan with zero
 requests. It does not read credentials, construct a connector, contact Modal,
 start a server or deploy. Only explicit `--execute` enables connections to an
-already configured authenticated endpoint. **No live pilot has been run.**
+already configured authenticated endpoint. **The completed v1 live pilot used 12 model calls; do not rerun it as part of v2 preparation.**
 Do not execute without separate authorization and frozen serving provenance.
 
 Fixed IDs, in fixed order (one case from each reported scenario family):
@@ -293,3 +293,96 @@ Observed snapshots are supplied test facts, not authenticated production facts.
 The independent oracle reduces shared implementation risk but still encodes the
 same chosen abstraction. Fixed reference replay validates plumbing and expected
 semantics, not whether Meta Llama can find repairs or outperform retries.
+
+
+## Development pilot v2 — paired-llama-pilot-v2
+
+Run the new version strictly offline with:
+
+```sh
+.venv/bin/python -m parallel_agent.pilot_v2 > /tmp/parallel-pilot-v2-plan.json
+```
+
+The v1 runner remains unchanged. Historical source revision is
+`e37913542a8e1b1ff4c0145bf51a8046b6c10ef3`. The completed 12-call artifact
+`../parallel-pilot-report.json` must never be overwritten or rerun. Its SHA-256 is
+`94518069b11d70f22ce92432340f15a34f7d9751b5b882fa8a50769bc72134af`.
+V2 is a protocol change, not a retrospective re-scoring of those model calls.
+
+The four previously inspected cases (02, 15, 16, 38) are development material,
+not independent held-out evidence. All 40 original fixtures remain intact.
+Canonical task hashing includes exactly `task`, `initial`, `target`, and `policy`,
+with sorted object keys, compact JSON, ASCII escaping and UTF-8 SHA-256. Array
+order and all field values are preserved. Evaluator IDs, categories, probes,
+references and expected labels are excluded. Thus cases 15 and 16 are duplicates
+for the model despite different probes. Both benchmark and v2 reports enumerate
+all duplicate groups; v2 refuses a selected set containing duplicate task hashes.
+This detects exact payload duplicates, not semantic equivalents or independence.
+
+The fixed v2 development schedule is:
+
+| Case ID | Purpose | Arm order |
+| --- | --- | --- |
+| `02-clear-then-delete` | Sticky protection and unauthorized operations | guided, retry |
+| `16-identical-forbidden-replace` | Goal achievement cannot excuse identical forbidden writes | retry, guided |
+| `37-partial-goal` | Preserve legitimate work and complete both creations | guided, retry |
+| `38-allowed-unprotected-delete` | Conservative-rejection diagnostic | retry, guided |
+
+Cases 02, 16 and 37 form the development comparison group. Case 38 is reported
+separately and excluded from repair/gate-recovery comparison denominators. Its
+exact empty target and sole allowed deletion require deleting `existing`.
+The uncertainty domain also contains `existing` with an active subscription;
+search reaches this witness on evaluation 3. Sticky protection forbids deletion
+in that state. Empty proposals fail the observed goal; other operations violate
+the allowlist; repeated deletions cause simulation errors. No proposal can meet
+both endpoints under this specification. Rejection is a documented specification
+conflict, not evidence that the model failed to repair an achievable robust task.
+The invariant, uncertainty domain, operation language and gate remain unchanged.
+
+V2 reports two explicit endpoints per arm:
+
+* `observed_task_success`: independent oracle confirms exact target, zero observed
+  deletion violations, zero attempted-operation policy failures and zero simulation
+  errors. Counterfactual violations do not count as observed violations.
+* `counterfactual_robust_acceptance`: the trusted repair gate accepts after observed
+  checks and a bounded search with no witness. This is bounded acceptance, not
+  proof of robustness over the full uncertainty domain or universal safety.
+
+Failed/absent final outputs have null observed measurements and false acceptance;
+prior candidate scores remain separate. Case 38 can be observed-successful while
+robust acceptance is false. Reports identify analysis groups and conflicts rather
+than collapse the endpoints into an unexplained repair-failure rate.
+
+Guided feedback leads with zero-based forbidden operation indices, violated
+policies and observed failures. It explicitly requests a revised JSON proposal,
+removal of unauthorized unnecessary operations (including identical replacements),
+and preservation of legitimate actions. Goal completion never overrides policy.
+Only latest concise evidence is model-visible; full immutable iteration history,
+traces and witness provenance remain in the report. A counterfactual witness
+contains its hypothetical snapshot and violations, never asserted observed facts.
+Budget language explicitly allows the current repair response and separately
+counts additional generations available afterward (zero in this one-repair pilot).
+
+Both arms receive the same original parsed immutable proposal, task, model,
+temperature, output/operation caps, search allowances and gate. Simple retry gets
+only the previous proposal and fixed revision instruction, with no verification
+findings, witnesses, scores or reference solution. Each arm starts from the original
+snapshot. Balanced ordering is fixed before any v2 model collection. Early stopping
+and repeated parsed proposals remain terminal; no extra transport retries are added.
+
+All v1 execution safeguards apply: explicit `--execute`, at most 12 generation
+invocations including failures (4 shared initial plus at most 8 repairs), zero
+calls/configuration reads in dry run, 16 operations, 16 search evaluations per
+iteration and 32 per arm, configurable socket/total/global deadlines, secure
+same-origin HTTPS Modal 303 GET polling, secret-redacted persistence, and no
+automatic deployment. V2 report paths must be new, never the historical artifact.
+No live execution is authorized by this protocol update.
+
+Any future superiority claim requires fresh, distinct, preregistered held-out
+cases and a larger controlled paired comparison, with frozen serving provenance,
+endpoint definitions, conflict exclusions, family clustering, failure handling and
+arm order. These four tasks are selected development material; even distinct hashes
+are not independent scenarios. Prompt lengths and actual call costs differ, the
+search is bounded, temperature-zero outputs may repeat, and serving nondeterminism
+remains possible. Offline tests validate mechanics, not model repair performance.
+No v2 performance or superiority claim is made.
