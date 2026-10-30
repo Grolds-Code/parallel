@@ -477,3 +477,39 @@ belongs only to the historical live run; the replay does not reproduce model
 generation or latency. Bounded success is not universal safety or execution approval.
 
 Offline tests, including failure exit handling: `uv run pytest -q`.
+
+## Local browser demonstration
+
+Launch from the repository root:
+
+```sh
+uv run --offline python -m parallel_agent.web_demo
+```
+
+Open **http://127.0.0.1:8765**. Stop with Ctrl-C; optionally choose another
+port with `--port 8766`. The standard-library server binds only to loopback.
+No new dependencies, credentials, network services, GPUs, or inference are needed.
+
+The six-step investigation shows the synthetic snapshot, simulated operations,
+replayable observed counterexample, original-customer action policy, recorded
+Meta Llama create-only correction, and bounded verification. The comparison
+selector evaluates unsafe deletion, create plus an identical original-customer
+replacement, and create only. The identical replacement meets the final-state
+goal but violates the explicit action policy.
+
+`/api/evidence?scenario=delete` (also `replacement` or `create`) computes evidence
+using public `simulate`, `verify`, `evaluate`, `search_counterexample`, and
+`repair_proposal` APIs. Every proposal starts from the original immutable snapshot.
+The repair panel always replays the recorded delete → create-only sequence,
+independently of the selected comparison. The callback is **RECORDED MODEL OUTPUT /
+OFFLINE REPLAY**, never fresh inference. Search budgets are 3 per iteration and
+6 total; the repair loop consumes 4 search evaluations. Independent comparison
+checks and witness replay are additional evaluations. Search checks deletion
+constraints; goal and action policy are separate observed-state checks.
+
+Computation failures return an error with no verdict; Recompute retries locally.
+Static routes are allowlisted, with no arbitrary file access or inference proxy.
+This is a local demonstration, not a production web service. Bounded verification
+is not universal safety or execution approval. The existing CLI replay remains
+available unchanged. Offline backend and route coverage is in
+`tests/test_web_demo.py`; run `uv run pytest -q`.
