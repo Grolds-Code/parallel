@@ -331,3 +331,14 @@ and 63.73 seconds elapsed**. Iteration 1 failures were `action_violation`,
 See the [OFFLINE REPLAY instructions](../../README.md#strict-meta-llama-repair-live-outcome-and-offline-replay)
 for local recomputation using the recorded proposals. This is not fresh Llama
 inference; no new live run was performed to add the replay.
+
+### Private paired pilot
+
+The [pilot protocol](../../docs/benchmark_protocol.md#strictly-capped-four-case-pilot-preparation)
+provides exact offline and separately authorized live commands. Its private connector
+enables the validated 303 GET polling described above, defaults to 180-second socket
+and 2400-second transport deadlines, and adds a configurable global experiment
+deadline across all tasks/arms. An authenticated request can wake a billable GPU
+container. Client deadlines and Ctrl-C do not guarantee remote cancellation or a
+dollar ceiling. Follow the private-app shutdown procedure above after authorized
+use; leave the public demonstration untouched. This preparation authorizes no live run.

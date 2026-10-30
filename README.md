@@ -547,3 +547,11 @@ and one container that scales to zero. It leaves the authenticated
 `parallel-llama` service and the loopback development server unchanged.
 See the recipe for offline SDK validation, exact deployment/rollback commands,
 resource limits and approximate costs. This deployment has not been run.
+
+### Offline evaluation benchmark
+
+The [evaluation protocol](docs/benchmark_protocol.md) documents 40 deterministic
+synthetic customer-management tasks, independent goals and operation policies,
+metric definitions, and a later controlled Meta Llama repair-versus-retry study.
+Run `.venv/bin/python -m parallel_agent.benchmark` from this checkout for a JSON
+fixture replay. This invokes no models and reports no model-performance results.
