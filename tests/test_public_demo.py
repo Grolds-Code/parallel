@@ -54,6 +54,49 @@ def test_only_existing_assets(path):
     assert head[1] == headers
 
 
+@pytest.mark.parametrize("query", [
+    b"utm_source=chatgpt.com",
+    b"utm_source=chatgpt.com&utm_medium=referral&utm_campaign=launch",
+    b"utm_term=bounded-checks&utm_content=link_1.2~demo",
+    b"&".join(key + b"=" + b"a" * 128 for key in sorted(public_demo.REFERRAL_KEYS)),
+])
+def test_homepage_referrals_ignored(query, monkeypatch):
+    monkeypatch.setattr(web_demo, "build_evidence", lambda *_: pytest.fail("Referral computed"))
+    assert request(query=query) == request()
+    assert request(query=query, method="HEAD") == request(method="HEAD")
+
+
+@pytest.mark.parametrize("query", [
+    b"unknown=value", b"utm_other=value", b"scenario=create", b"UTM_SOURCE=chatgpt.com",
+    b"utm_source=chatgpt.com&unknown=value", b"utm_source=", b"utm_source",
+    b"utm_source=a&utm_source=a", b"utm_source=a&utm_source=b",
+    b"&utm_source=a", b"utm_source=a&", b"utm_source=a&&utm_medium=b",
+    b"utm_source=a=b", b"utm_source=a;utm_medium=b", b"utm_source=a+b",
+    b"utm_source=a b", b"utm_source=<script>", b"utm_source=a#fragment",
+    b"%75tm_source=a", b"utm_source=%61", b"utm_source=%", b"utm_source=%GG",
+    b"utm_source=%00", b"utm_source=%26scenario%3Dcreate", b"utm_source=%ff",
+    b"utm_source=\xff", b"utm_source=\x00", b"utm_source=a\r\n", b"utm_source=" + b"a" * 129,
+])
+def test_invalid_homepage_referrals(query, monkeypatch):
+    monkeypatch.setattr(web_demo, "route", lambda *_: pytest.fail("Invalid request dispatched"))
+    assert request(query=query)[0] == 400
+
+
+def test_homepage_referral_target_limit():
+    assert request(query=b"x" * 1024)[0] == 400
+    assert request(query=b"x" * 1025)[0] == 414
+
+
+@pytest.mark.parametrize("path,status", [
+    ("/app.js", 400), ("/style.css", 400), ("/api/evidence", 400),
+    ("/missing", 404), ("/api/inference", 404), ("/api/evidence/", 404),
+])
+def test_referrals_not_accepted_elsewhere(path, status, monkeypatch):
+    monkeypatch.setattr(web_demo, "build_evidence", lambda *_: pytest.fail("Invalid request computed"))
+    assert request(path, b"utm_source=chatgpt.com")[0] == status
+    assert request(path, b"x" * 65)[0] == 414
+
+
 @pytest.mark.parametrize("scenario,safe,goal", [
     ("delete", False, False), ("replacement", False, True), ("create", True, True),
 ])
@@ -91,6 +134,9 @@ def test_default_and_head_evidence():
     b"scenario=create&", b"scenario", b"budget=999999", b"code=print(1)",
     b"model=other", b"proposal={}", b"scenario=%63reate", b"scenario=create%00",
     b"scenario=create;budget=1", b"scenario=create&x=1", b"%ff", b"\xff",
+    b"scenario=create&utm_source=chatgpt.com",
+    b"utm_source=chatgpt.com&scenario=create",
+    b"scenario=create%26utm_source%3Dchatgpt.com",
 ])
 def test_invalid_query_never_computes(query, monkeypatch):
     monkeypatch.setattr(web_demo, "build_evidence", lambda *_: pytest.fail("Invalid request computed"))

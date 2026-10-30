@@ -1,6 +1,7 @@
 """Read-only ASGI boundary for the fixed offline browser lab (no server startup)."""
 import asyncio
 import json
+import re
 
 from . import web_demo
 
@@ -8,6 +9,11 @@ PATHS = frozenset(("/", "/app.js", "/style.css", "/api/evidence"))
 QUERIES = {b"": "delete", **{
     f"scenario={name}".encode(): name for name in web_demo.SCENARIOS
 }}
+REFERRAL_KEYS = frozenset((
+    b"utm_source", b"utm_medium", b"utm_campaign", b"utm_term", b"utm_content",
+))
+REFERRAL_VALUE = re.compile(rb"[A-Za-z0-9._~-]{1,128}")
+HOMEPAGE_QUERY_LIMIT = 1024
 SECURITY_HEADERS = (
     (b"cache-control", b"no-store"),
     (b"x-content-type-options", b"nosniff"),
@@ -25,15 +31,34 @@ def error(status, message):
     return status, "application/json", json.dumps({"error": message}).encode()
 
 
+def valid_referral_query(query):
+    """Accept literal UTM fields only; never decode or retain supplied values."""
+    if not query:
+        return True
+    seen = set()
+    for field in query.split(b"&"):
+        key, separator, value = field.partition(b"=")
+        if (key not in REFERRAL_KEYS or key in seen or separator != b"="
+                or REFERRAL_VALUE.fullmatch(value) is None):
+            return False
+        seen.add(key)
+    return True
+
+
 def response(scope):
-    """Validate before dispatch; accept only literal paths and fixed query bytes."""
+    """Validate before dispatch; referral fields are ignored on the homepage only."""
     path = scope.get("path", "")
     query = scope.get("query_string", b"")
     raw = scope.get("raw_path", path.encode("utf-8"))
-    if len(raw) > 128 or len(query) > 64:
+    query_limit = HOMEPAGE_QUERY_LIMIT if path == "/" else 64
+    if len(raw) > 128 or len(query) > query_limit:
         return error(414, "Request target too long")
     if path not in PATHS or raw != path.encode("ascii", errors="replace"):
         return error(404, "Not found")
+    if path == "/":
+        if not valid_referral_query(query):
+            return error(400, "Invalid query")
+        return web_demo.route(path)
     if path != "/api/evidence":
         if query:
             return error(400, "Invalid query")

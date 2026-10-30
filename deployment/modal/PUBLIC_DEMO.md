@@ -20,15 +20,27 @@ Only `GET` and `HEAD` are supported:
 
 | Path | Accepted query | Result |
 | --- | --- | --- |
-| `/` | none | Existing `index.html` |
+| `/` | none, or the referral fields described below | Existing `index.html`, unchanged |
 | `/app.js` | none | Existing JavaScript |
 | `/style.css` | none | Existing stylesheet |
 | `/api/evidence` | none, or exactly `scenario=delete`, `scenario=replacement`, `scenario=create` | Fresh deterministic offline evidence |
 
-No query defaults except omitted scenario (deletion). Duplicate keys, unknown
-keys, blank/unknown scenarios, encoded query aliases, extra separators and
-noncanonical paths are rejected. Target limits are 128 path bytes and 64 query
-bytes. Bodies and streaming uploads are rejected without buffering/draining;
+The homepage alone accepts the literal, case-sensitive keys `utm_source`,
+`utm_medium`, `utm_campaign`, `utm_term`, and `utm_content`. For example,
+`/?utm_source=chatgpt.com` returns the same HTML and security headers as `/`.
+Each key may occur at most once, with a nonempty value of 1–128 ASCII characters
+from `A-Z`, `a-z`, `0-9`, `.`, `_`, `~`, and `-`. Fields are separated by a single
+`&` and each uses exactly one `=`. Values are ignored and never reflected into
+HTML. Percent encoding, plus signs, whitespace, empty fields, extra separators,
+unknown keys, and duplicate keys (even with identical values) are rejected.
+
+Referral fields are not accepted on assets, the evidence API, or other paths.
+The evidence API still accepts only the exact query bytes listed in the table,
+with no defaults except omitted scenario (deletion). Blank/unknown scenarios,
+encoded aliases, and additional fields remain rejected. Noncanonical paths are
+rejected. Target limits are 128 path bytes, 1024 query bytes on `/` only, and
+64 query bytes everywhere else. Oversized targets return 414; invalid queries
+on known paths return 400. Bodies and streaming uploads are rejected without buffering/draining;
 waiting for an initial empty ASGI request event is limited to one second.
 All other HTTP methods return 405; WebSockets are denied. There are no docs,
 file mounts, directory listings, inference proxy, user proposals, execution,
@@ -73,7 +85,7 @@ not claimed to be a read-only filesystem or a general Python sandbox.
 From the repository root:
 
 ```sh
-uv run pytest -q
+uv run --offline pytest -q
 node --check src/parallel_agent/web_assets/app.js
 node --check tests/web_demo_ui.cjs
 git diff --check
@@ -82,6 +94,8 @@ git diff --check
 `tests/test_public_demo.py` calls ASGI directly with network/model entry points
 blocked. It covers assets, evidence, deterministic engine results, validation,
 methods, bodies, traversal, errors, headers, lifecycle and WebSocket rejection.
+Referral regressions cover the ChatGPT URL, unchanged HTML and HEAD responses,
+value/target limits, malformed and duplicate fields, and API query injection.
 `tests/test_public_modal_deployment.py` captures the entire declaration with a
 fake SDK and checks the file manifest and resource/security configuration.
 Existing local server, UI harness, engine and GPU deployment tests remain intact.
