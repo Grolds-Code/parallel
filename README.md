@@ -1,9 +1,23 @@
-# PARALLEL deterministic execution foundation
+# PARALLEL
 
-A Python 3.12+ in-memory simulator and safety verifier for proposed customer
-operations, with an optional provider-independent chat-completions connector.
+PARALLEL is a counterexample-guided agent verification and repair system. It
+uses a Python 3.12+ in-memory simulator, safety verifier, and bounded search for
+proposed customer operations, with an optional provider-independent
+chat-completions connector.
 There are no runtime dependencies or database writes. The deterministic core and
 test suite require no model calls, external APIs, or credentials.
+
+## Proposed project license
+
+The unmodified [Apache License 2.0](LICENSE) and `Apache-2.0` package metadata
+are proposed for owner review before public publication, assuming the author
+owns all original project code.
+
+This proposal applies to original PARALLEL code. It does not relicense Meta Llama
+models or other third-party materials. Model weights are not included. Keep the
+separate [Meta Llama attribution](deployment/modal/Notice) and
+[model licensing documentation](deployment/modal/README.md) with the optional
+Llama deployment; the project's Apache license does not replace those terms.
 
 ## Reproduce
 
@@ -20,6 +34,16 @@ checkout, run entirely locally:
 ```sh
 .venv/bin/python -m pytest -q
 ```
+
+Node.js is optional for the browser UI test harness (`tests/web_demo_ui.cjs`),
+which pytest runs automatically when `node` is on PATH and otherwise skips.
+Use Node.js 24 (also configured in CI). The harness uses Node's built-in modules
+and a simulated DOM; no npm packages, browser installation, or browser downloads
+are needed. Install Node to include this test in a complete offline run.
+
+GitHub Actions installs the locked Python development dependencies and runs the
+same suite with Node enabled. Installation needs package downloads; the tests
+need no credentials, paid services, model downloads, or live inference.
 
 Tests include exhaustive protection-flag combinations, invalid operations,
 container aliasing, frozen records, transient deletions, and attempts to clear

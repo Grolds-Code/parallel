@@ -1,7 +1,9 @@
 [project]
 name = "parallel-agent"
 version = "0.1.0"
-description = "Add your description here"
+description = "Counterexample-guided agent verification and repair system"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
 readme = "README.md"
 authors = [
     { name = "Grold Otieno", email = "groldotieno97@gmail.com" }

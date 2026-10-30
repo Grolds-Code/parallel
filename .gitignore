@@ -1,10 +1,73 @@
-# Python-generated files
+# Python build output and environments
 __pycache__/
 *.py[oc]
 build/
 dist/
 wheels/
-*.egg-info
+*.egg-info/
+.venv/
+venv/
 
-# Virtual environments
-.venv
+# Local test, coverage, and tool output
+.pytest_cache/
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+node_modules/
+.DS_Store
+# Root-local generated output; keep similarly named source packages trackable.
+/artifacts/
+/outputs/
+/logs/
+/tmp/
+
+# Environment secrets; only deliberately sanitized templates belong in Git.
+.env
+.env.*
+!.env.example
+!.env.*.example
+!.env.sample
+!.env.*.sample
+!.env.template
+!.env.*.template
+
+# Private keys and credential containers (public keys remain trackable).
+*.pem
+*.key
+*.p12
+*.pfx
+*.p8
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+!*.pem.example
+!*.key.example
+
+# Modal authentication; do not ignore deployment/modal source code.
+.modal.toml
+.modal.toml.*
+.modal/
+!.modal.toml.example
+!.modal.toml.sample
+
+# Hugging Face caches and locally downloaded model weights.
+.cache/huggingface/
+.huggingface/
+huggingface/
+hf-cache/
+hf_cache/
+models--*/
+*.safetensors
+*.gguf
+*.ggml
+*.ckpt
+*.pt
+*.pth
+pytorch_model*.bin
+consolidated*.pth
+# Avoid broad *.bin, *.json, models/, or modal/ rules that hide source/fixtures.
