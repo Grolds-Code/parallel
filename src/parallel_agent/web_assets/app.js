@@ -33,7 +33,7 @@ function checks(e, goal, search, parent) {
 }
 function outcomes() {
   $('outcomes').replaceChildren(); $('historical').replaceChildren();
-  if (!evidence) { node('p', 'No verdict available. Recompute local evidence to inspect the recorded path.', $('outcomes')); return; }
+  if (!evidence) { node('p', 'No verdict available. Recompute offline evidence to inspect the recorded path.', $('outcomes')); return; }
   const history = evidence.repair.history;
   [history[0], history.at(-1)].forEach((item, i) => {
     const e = item.observed_evaluation;
@@ -108,14 +108,14 @@ function render() {
   const details = node('details', ''); node('summary', 'Inspect complete computed evidence (JSON)', details); json(evidence, details);
 }
 async function load() {
-  const token = ++request; evidence = null; render(); $('content').setAttribute('aria-busy', 'true'); $('outcomes').setAttribute('aria-busy', 'true'); $('status').textContent = 'Computing local evidence…';
+  const token = ++request; evidence = null; render(); $('content').setAttribute('aria-busy', 'true'); $('outcomes').setAttribute('aria-busy', 'true'); $('status').textContent = 'Computing offline evidence…';
   try {
     const response = await fetch(`/api/evidence?scenario=${encodeURIComponent($('scenario').value)}`, {cache: 'no-store'});
     if (!response.ok) throw new Error('Evidence unavailable');
     const data = await response.json();
     if (token !== request) return;
     if (!data.repair?.history?.length || !data.evaluation || !data.search || !data.historical_run) throw new Error('Incomplete evidence');
-    evidence = data; $('status').textContent = 'Computed locally · simulation + verification + bounded search'; render();
+    evidence = data; $('status').textContent = 'Computed offline · simulation + verification + bounded search'; render();
   } catch (_) {
     if (token !== request) return;
     evidence = null; render(); $('status').textContent = 'Evidence computation failed. No verdict available. Use Recompute to retry.';

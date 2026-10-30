@@ -513,3 +513,13 @@ This is a local demonstration, not a production web service. Bounded verificatio
 is not universal safety or execution approval. The existing CLI replay remains
 available unchanged. Offline backend and route coverage is in
 `tests/test_web_demo.py`; run `uv run pytest -q`.
+
+### Optional public CPU-only lab
+
+A separate [public Modal deployment recipe](deployment/modal/PUBLIC_DEMO.md)
+defines `parallel-public-demo` with the same offline verification evidence and
+allowlisted assets, strict read-only ASGI routes, no GPU or attached secrets,
+and one container that scales to zero. It leaves the authenticated
+`parallel-llama` service and the loopback development server unchanged.
+See the recipe for offline SDK validation, exact deployment/rollback commands,
+resource limits and approximate costs. This deployment has not been run.
