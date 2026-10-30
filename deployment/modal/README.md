@@ -313,5 +313,21 @@ replaced demo-001 with identical field values. The final-state goal missed this
 operation-level violation. The completed live round trip is confirmed, but full
 instruction compliance was not. Explicit action constraints now reject that
 proposal in offline regression tests. See the root README's action-constraint
-section for the interface and limitations. No live rerun was performed for this
-fix.
+section for the interface and limitations. No live rerun was performed during that initial fix. The subsequent strict
+live success is recorded below.
+
+
+### Subsequent strict action-compliant live success
+
+The observed `unsloth/Llama-3.2-3B-Instruct` run on Modal started with
+`Customer("demo-001", active_subscription=True)` and `DeleteCustomer("demo-001")`.
+The goal was to create demo-002 with all flags false while preserving demo-001,
+using `action_check=forbid_original_customer_operations`. It reported
+**`passed_bounded_checks`, one model repair attempt, four search evaluations,
+and 63.73 seconds elapsed**. Iteration 1 failures were `action_violation`,
+`observed_violation`, and `goal_not_met`. Iteration 2 contained only
+`CreateCustomer(demo-002)`, no failures, goal met, and no action violations.
+
+See the [OFFLINE REPLAY instructions](../../README.md#strict-meta-llama-repair-live-outcome-and-offline-replay)
+for local recomputation using the recorded proposals. This is not fresh Llama
+inference; no new live run was performed to add the replay.
