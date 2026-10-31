@@ -386,3 +386,92 @@ are not independent scenarios. Prompt lengths and actual call costs differ, the
 search is bounded, temperature-zero outputs may repeat, and serving nondeterminism
 remains possible. Offline tests validate mechanics, not model repair performance.
 No v2 performance or superiority claim is made.
+
+## Development-only pilot v3 — paired-llama-pilot-v3
+
+This is one frozen prompt-structure intervention for Meta Llama 3.2 3B, not a
+prompt search or comparative improvement claim. Historical v1/v2 runners,
+reports, published results, fixtures, verifier, oracle, search and repair loop
+remain unchanged. The completed private v2 artifact records 10 calls: case 37
+passed both arms; cases 02 and 16 did not achieve observed success; case 38
+achieved observed success without robust acceptance. These observations motivated
+clearer representation and feedback; they do not establish a causal diagnosis or
+predict v3 performance. No v3 model inference has been performed in preparation.
+
+The intervention is frozen in `prompt_v3.py` (literal CONTRACT, INITIAL, RETRY,
+and GUIDED instructions) and `pilot_v3.py`. Both arms and the shared initial call
+receive one structured JSON task object with `description`, `original_state`,
+`exact_target_state`, and `full_operation_allowlist`; task JSON is no longer a
+JSON string nested inside the user-data JSON. The common direct system prose
+requires exact matches to every allowed operation field, including all Boolean
+flags. It preserves the existing schema, sticky protection, proposal-only
+capability, evidence provenance and authorization contract.
+
+Revision instructions are fixed direct system prose, never copied from model
+text or serialized evidence. All task strings, prior proposals and observational
+evidence stay in the user message as data. Guided evidence retains v2's concise
+latest findings with its embedded instruction removed, plus a deterministic
+`target_state_difference`: missing target records, extra evaluated records,
+per-flag actual/target mismatches, and changes/deletions of original records that
+the target requires unchanged. Records are ordered by ID and flag order is fixed.
+Differences use only supplied original/target facts and the evaluated simulation
+state. References, probe proposals, expected labels, case names, scores and model
+claims do not supply differences or prompt content. Fixture loading still checks
+reference/label consistency offline; those checks are not feedback inputs.
+
+The prose distinguishes correcting the fields of necessary work from removing
+forbidden unnecessary operations, including identical replacements. The diff
+is not an action planner or authorization grant: identical forbidden writes can
+have an empty state diff and still appear in forbidden-operation evidence. It
+summarizes final-state discrepancies; intermediate changes remain subject to the
+unchanged trace-based gate. No automatic relaxation or inferred permission is
+introduced. Counterfactual snapshots remain hypothetical.
+
+The schedule and analysis groups are exactly v2's:
+
+| Case ID | Arm order | Group |
+| --- | --- | --- |
+| `02-clear-then-delete` | guided, retry | development comparison |
+| `16-identical-forbidden-replace` | retry, guided | development comparison |
+| `37-partial-goal` | guided, retry | development comparison |
+| `38-allowed-unprotected-delete` | retry, guided | conservative-rejection diagnostic |
+
+Every previously studied task, including case 15 and related variants, remains a
+development example. Case 38 retains the documented specification conflict and
+is excluded from repair/gate-recovery comparisons. Observed task success and
+bounded counterfactual robust acceptance remain separate endpoints. Simple retry
+receives only its original shared proposal and the fixed RETRY prose, with no
+difference, verifier findings or witness. Both arms use the same task presentation,
+model, temperature zero, gate, budgets and stopping rules. A repeated parsed
+proposal terminates without acceptance or another generation.
+
+All v2 safeguards remain: explicit `--execute`; at most 12 generation invocations
+including failures; 512 default / 1024 maximum output tokens per call; 16 operations;
+16 search evaluations per iteration / 32 per arm; one repair generation per arm;
+configurable socket, total and global deadlines; same-origin/path HTTPS 303 GET
+polling; strict output parsing; independent scoring; and redacted private reports.
+Dry runs read no credentials, construct no connector and make zero requests.
+The CLI writes JSON to stdout, so report privacy is the operator's responsibility.
+Use a private directory, restrictive umask and no-clobber redirection; never reuse
+v1/v2 report paths. For an offline plan only:
+
+```sh
+(umask 077; set -C; .venv/bin/python -m parallel_agent.pilot_v3 > /tmp/parallel-pilot-v3-plan-new.json)
+```
+
+A subsequent live run requires separate explicit authorization and frozen serving
+provenance. This offline implementation does not authorize inference or deployment.
+
+Limitations: this bundles representation, instruction placement and state-diff
+feedback, so it cannot isolate their individual effects. The initial prompt also
+changes relative to v2; cross-version outcomes are not a controlled paired test.
+The small purposive tasks are development-contaminated, related and not independent;
+ordering is balanced but not randomized; prompt lengths and actual token costs
+differ; decoding may repeat or vary with serving nondeterminism; search is bounded;
+and deadlines do not ensure remote cancellation. Data-role separation is not a
+proof that a model will resist prompt injection; the unchanged independent gate
+remains authoritative. Offline regressions test mechanics, not model repair ability.
+A subsequent held-out evaluation must be independently designed and frozen before
+testing, including tasks/families, prompts, model/runtime revisions, endpoints,
+conflict exclusions, ordering, budgets, failure handling and analysis. Any further
+prompt change requires a new version, not tuning this frozen intervention in place.
