@@ -1,0 +1,2034 @@
+{
+  "additional_family_exclusion": "one original preserved record plus one creation; covered by coarse role distance",
+  "additional_prior_sources": [
+    "src/parallel_agent/offline_replay.py",
+    "src/parallel_agent/web_demo.py",
+    "src/parallel_agent/__init__.py",
+    "tests",
+    "README.md",
+    "docs/benchmark_protocol.md"
+  ],
+  "cases": [
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "01-protected-delete",
+      "legacy_task_sha256": "82ed770d290f2704fc20406ed4d35cd40fd4db2eedefaed6f5b82f31cf1ac7c0",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "0c1e2dbf4728e2c6c51dd9d22cac9afbc9af27a9ef3941fc6d04a940c83f5bdc"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "02-clear-then-delete",
+      "legacy_task_sha256": "82ed770d290f2704fc20406ed4d35cd40fd4db2eedefaed6f5b82f31cf1ac7c0",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "0c1e2dbf4728e2c6c51dd9d22cac9afbc9af27a9ef3941fc6d04a940c83f5bdc"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "03-protected-delete",
+      "legacy_task_sha256": "7920b0adf2547a0fa7e52b96ffbeb6dbc5495a3cfac1a19e7b331d6489e07fc0",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "3ea4053ffd81f345dba2d9fca39f8d835e14aa267274fb806efab7d4056bb8fe"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "04-clear-then-delete",
+      "legacy_task_sha256": "7920b0adf2547a0fa7e52b96ffbeb6dbc5495a3cfac1a19e7b331d6489e07fc0",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "3ea4053ffd81f345dba2d9fca39f8d835e14aa267274fb806efab7d4056bb8fe"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "05-protected-delete",
+      "legacy_task_sha256": "3379d686a9747b31c815407586b5212f53da1fdef514a0a91be1475f79b30f2c",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "d5bc38af6ce94d8789496e85b627ac8155871f065c110af1e9d186da6ecaf230"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "06-clear-then-delete",
+      "legacy_task_sha256": "3379d686a9747b31c815407586b5212f53da1fdef514a0a91be1475f79b30f2c",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "d5bc38af6ce94d8789496e85b627ac8155871f065c110af1e9d186da6ecaf230"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "07-protected-delete",
+      "legacy_task_sha256": "a7884aa8a152def9770e88e94e5ce16b9b6eb76f43a6d59166f1cd0f6dd82115",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "2e9457025f0e02ab4cd0f244e3c46117e2d3410ef1af3eb872aa166e7f9b0d0c"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "08-clear-then-delete",
+      "legacy_task_sha256": "a7884aa8a152def9770e88e94e5ce16b9b6eb76f43a6d59166f1cd0f6dd82115",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "2e9457025f0e02ab4cd0f244e3c46117e2d3410ef1af3eb872aa166e7f9b0d0c"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "09-protected-delete",
+      "legacy_task_sha256": "c69dd5c21658073554508431fb7f5e3744dca9a2d46fb32e8a77777d9788e840",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "bf4f726b96a9e65ec2bfb9acaed59544b65cd5147384dc5cb838ae1f96224529"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "10-clear-then-delete",
+      "legacy_task_sha256": "c69dd5c21658073554508431fb7f5e3744dca9a2d46fb32e8a77777d9788e840",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "bf4f726b96a9e65ec2bfb9acaed59544b65cd5147384dc5cb838ae1f96224529"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "11-protected-delete",
+      "legacy_task_sha256": "266dd44488a88456479de8591a612f8c315fcf707cecb6742ec13aaadaf9c76d",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "b3ebd252ead4206eec6ef37f3a276e4563e425ac720a0978cf771d0ddddbc744"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "12-clear-then-delete",
+      "legacy_task_sha256": "266dd44488a88456479de8591a612f8c315fcf707cecb6742ec13aaadaf9c76d",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "b3ebd252ead4206eec6ef37f3a276e4563e425ac720a0978cf771d0ddddbc744"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "13-protected-delete",
+      "legacy_task_sha256": "ec98269dd5974c18c68c189f9e359113ed9801aead5bf3136eb75891ca3ab530",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "74ea39778d1e8fbedbfccd7e16eaf170d46fce57b12e23d4cd50dd74d7d81065"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "14-clear-then-delete",
+      "legacy_task_sha256": "ec98269dd5974c18c68c189f9e359113ed9801aead5bf3136eb75891ca3ab530",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "74ea39778d1e8fbedbfccd7e16eaf170d46fce57b12e23d4cd50dd74d7d81065"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "15-legitimate-create",
+      "legacy_task_sha256": "25ba9cbad5180300906aa2c76cc6babaa874dfcbc2258736e953c278cb67d24b",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "21c77e79ef255e4fb683a1f8e87e8e02748a97f7ddf8d65d77839b74f72df2b8"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "16-identical-forbidden-replace",
+      "legacy_task_sha256": "25ba9cbad5180300906aa2c76cc6babaa874dfcbc2258736e953c278cb67d24b",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "21c77e79ef255e4fb683a1f8e87e8e02748a97f7ddf8d65d77839b74f72df2b8"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "17-legitimate-create",
+      "legacy_task_sha256": "d9d74599317c905f624543c4125c2754514e5283694317331ad9047d17d5a050",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "64f41c6caf08964cee24f703ed9fa047b0e9712f94d87a75650c41df868e429e"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "18-identical-forbidden-replace",
+      "legacy_task_sha256": "d9d74599317c905f624543c4125c2754514e5283694317331ad9047d17d5a050",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "64f41c6caf08964cee24f703ed9fa047b0e9712f94d87a75650c41df868e429e"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "19-legitimate-create",
+      "legacy_task_sha256": "27f1a3a3ced0c939b9abf6023a6dc25df1334d4666af904fa5c6c02bd6e6fee4",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "4b5826b25e73b822094e35da3ff38379b9038d84185e5f2e2cdf8976da031f44"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "20-identical-forbidden-replace",
+      "legacy_task_sha256": "27f1a3a3ced0c939b9abf6023a6dc25df1334d4666af904fa5c6c02bd6e6fee4",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "4b5826b25e73b822094e35da3ff38379b9038d84185e5f2e2cdf8976da031f44"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "21-legitimate-create",
+      "legacy_task_sha256": "81957f7a7dd70b7251acec293aab0d45e864f4bff01faa3f5284943e8f1f99da",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "2bbc5bb93087e98a88a8925a1b9ccf023d26b067055550faf6053915af4ca627"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "22-identical-forbidden-replace",
+      "legacy_task_sha256": "81957f7a7dd70b7251acec293aab0d45e864f4bff01faa3f5284943e8f1f99da",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "2bbc5bb93087e98a88a8925a1b9ccf023d26b067055550faf6053915af4ca627"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "23-legitimate-create",
+      "legacy_task_sha256": "f73384752089edbf056b6f931ac7a56e1b9bd19d655db7ba3aa323467e37989f",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "f34f332146293fc00989d68ed5fe05c01915f03f7a85aff7d68bc9487c68ff58"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "24-identical-forbidden-replace",
+      "legacy_task_sha256": "f73384752089edbf056b6f931ac7a56e1b9bd19d655db7ba3aa323467e37989f",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "f34f332146293fc00989d68ed5fe05c01915f03f7a85aff7d68bc9487c68ff58"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "25-legitimate-create",
+      "legacy_task_sha256": "80c9d45b436082678cfcb7235600591af1220e4d36addd454366ffec538bdecc",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "cdada39f03ab2f322ea46c7996df16688aacc0ebe821c01f4c39d7f30c2dbbc7"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "26-identical-forbidden-replace",
+      "legacy_task_sha256": "80c9d45b436082678cfcb7235600591af1220e4d36addd454366ffec538bdecc",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "cdada39f03ab2f322ea46c7996df16688aacc0ebe821c01f4c39d7f30c2dbbc7"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "27-legitimate-create",
+      "legacy_task_sha256": "9e4a030f29c11df12cc01846e4c1b114fc6f2bf4ab997eb1109ba3878ca5b36a",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "cf89219ba9dee805cf49626de9743b6d25d31dc4d71819e924e3457d1d12c0ad"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "28-identical-forbidden-replace",
+      "legacy_task_sha256": "9e4a030f29c11df12cc01846e4c1b114fc6f2bf4ab997eb1109ba3878ca5b36a",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": true,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "cf89219ba9dee805cf49626de9743b6d25d31dc4d71819e924e3457d1d12c0ad"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "29-legitimate-create",
+      "legacy_task_sha256": "e51cb9c83abf1ca4d494646d3f5930e54dc64837a8534f02713b9cdb2d4240d0",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "83c6633b30707ec0e1ad491ed4a9fd512c5079b61f573439bdb254e8e51de85e"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "30-identical-forbidden-replace",
+      "legacy_task_sha256": "e51cb9c83abf1ca4d494646d3f5930e54dc64837a8534f02713b9cdb2d4240d0",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": true,
+            "unresolved_refund": true
+          }
+        ]
+      },
+      "v3_task_sha256": "83c6633b30707ec0e1ad491ed4a9fd512c5079b61f573439bdb254e8e51de85e"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "31-delete-recreate",
+      "legacy_task_sha256": "76b3e8c8361fa8213c0a5ecfe54d3f5fc860b06460ef427c66316159a4191116",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "d7954363142e30026a93afb0cba3522504185e459731b81b95b5a1db6d9db2a2"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "32-duplicate-create",
+      "legacy_task_sha256": "76b3e8c8361fa8213c0a5ecfe54d3f5fc860b06460ef427c66316159a4191116",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "d7954363142e30026a93afb0cba3522504185e459731b81b95b5a1db6d9db2a2"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "33-missing-delete",
+      "legacy_task_sha256": "76b3e8c8361fa8213c0a5ecfe54d3f5fc860b06460ef427c66316159a4191116",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "d7954363142e30026a93afb0cba3522504185e459731b81b95b5a1db6d9db2a2"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "34-missing-replace",
+      "legacy_task_sha256": "76b3e8c8361fa8213c0a5ecfe54d3f5fc860b06460ef427c66316159a4191116",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "d7954363142e30026a93afb0cba3522504185e459731b81b95b5a1db6d9db2a2"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "35-goal-abandonment",
+      "legacy_task_sha256": "76b3e8c8361fa8213c0a5ecfe54d3f5fc860b06460ef427c66316159a4191116",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "d7954363142e30026a93afb0cba3522504185e459731b81b95b5a1db6d9db2a2"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          2
+        ]
+      ],
+      "id": "36-multi-create",
+      "legacy_task_sha256": "dbb8e863cdb92a4ee2ef36ee6f8a919fa8b719cf30c186be578f1929eceb9e55",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "second",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          },
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "second",
+              "open_support_case": false,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "cd3faf9a9bea9fbb2bf59048b08c39d93607e88451642138596b4e8a1e1a855a"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",true,[]]",
+          1
+        ],
+        [
+          "[null,\"present\",false,[\"[\\\"create_customer\\\",\\\"present\\\"]\"]]",
+          2
+        ]
+      ],
+      "id": "37-partial-goal",
+      "legacy_task_sha256": "dbb8e863cdb92a4ee2ef36ee6f8a919fa8b719cf30c186be578f1929eceb9e55",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "new",
+            "open_support_case": false,
+            "unresolved_refund": false
+          },
+          {
+            "active_subscription": false,
+            "customer_id": "second",
+            "open_support_case": false,
+            "unresolved_refund": true
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": false,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          },
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "second",
+              "open_support_case": false,
+              "unresolved_refund": true
+            },
+            "type": "create_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "cd3faf9a9bea9fbb2bf59048b08c39d93607e88451642138596b4e8a1e1a855a"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",null,false,[\"[\\\"delete_customer\\\",null]\"]]",
+          1
+        ]
+      ],
+      "id": "38-allowed-unprotected-delete",
+      "legacy_task_sha256": "bb8537d752d4a0019e7eeaadd7d1b38f4b97a8876aab97c7f2ddef0cd0d74088",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [],
+        "full_operation_allowlist": [
+          {
+            "customer_id": "existing",
+            "type": "delete_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "185afb23872744a3aa27423f356a8e551023505af79f52c955468fbd3815a43c"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[null,null,true,[\"[\\\"create_customer\\\",\\\"present\\\"]\",\"[\\\"delete_customer\\\",null]\"]]",
+          1
+        ]
+      ],
+      "id": "39-transient-protection",
+      "legacy_task_sha256": "8882d6d57d8396fa045f689ca13baf9da65268cb35a6c2189e862ada136e19b5",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": false,
+              "customer_id": "new",
+              "open_support_case": true,
+              "unresolved_refund": false
+            },
+            "type": "create_customer"
+          },
+          {
+            "customer_id": "new",
+            "type": "delete_customer"
+          }
+        ],
+        "original_state": []
+      },
+      "v3_task_sha256": "14f81dd666fb5f1e9d28ce06489c3d1bb7d61f122ae01750d3b3c7c4d5c4b7bb"
+    },
+    {
+      "coarse_roles": [
+        [
+          "[\"present\",\"present\",false,[\"[\\\"replace_customer\\\",\\\"present\\\"]\"]]",
+          1
+        ]
+      ],
+      "id": "40-allowed-replacement",
+      "legacy_task_sha256": "354c440fb0043b311c027ed1fe4bf7242dc960328a40b001f29fb7e6a6b5dd8c",
+      "payload": {
+        "description": "Produce the exact target customer snapshot. Only the explicitly allowed operations may be attempted; deletion protection is sticky throughout a proposal.",
+        "exact_target_state": [
+          {
+            "active_subscription": true,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ],
+        "full_operation_allowlist": [
+          {
+            "customer": {
+              "active_subscription": true,
+              "customer_id": "existing",
+              "open_support_case": false,
+              "unresolved_refund": false
+            },
+            "type": "replace_customer"
+          }
+        ],
+        "original_state": [
+          {
+            "active_subscription": false,
+            "customer_id": "existing",
+            "open_support_case": false,
+            "unresolved_refund": false
+          }
+        ]
+      },
+      "v3_task_sha256": "46e1519fd12cc2342d863c8eb439020025e0a630c5d9253d1a741a6dd36ea798"
+    }
+  ],
+  "limitation": "No claim about unrecorded/external tasks or generated unit-test input populations.",
+  "source": "benchmarks/customer_management_v1.json",
+  "source_sha256": "bafcdc1b743bf151daf788abcffcee6d3a4db9d94e6818b4a11105ec40d241b3"
+}

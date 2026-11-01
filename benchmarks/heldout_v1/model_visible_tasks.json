@@ -1,0 +1,3576 @@
+{
+  "H01": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "fla0-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla0-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla0-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla0-edit1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla0-edit2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "fla0-edit2",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "fla0-edit1",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "fla0-edit0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "fla0-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla0-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla0-edit0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla0-edit1",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla0-edit2",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H02": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "fla1-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla1-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla1-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla1-edit1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla1-edit2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla1-edit3",
+        "open_support_case": false,
+        "unresolved_refund": false
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "fla1-edit3",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "fla1-edit2",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "fla1-edit1",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "fla1-edit0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "fla1-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla1-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla1-edit0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla1-edit1",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla1-edit2",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla1-edit3",
+        "open_support_case": true,
+        "unresolved_refund": false
+      }
+    ]
+  },
+  "H03": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "fla2-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla2-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla2-edit0",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla2-edit1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla2-edit2",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla2-edit3",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla2-edit4",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "fla2-edit4",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "fla2-edit3",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "fla2-edit2",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "fla2-edit1",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "fla2-edit0",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "fla2-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla2-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla2-edit0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla2-edit1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla2-edit2",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla2-edit3",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla2-edit4",
+        "open_support_case": true,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H04": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "fla3-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla3-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla3-edit0",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla3-edit1",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla3-edit2",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla3-edit3",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla3-edit4",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla3-edit5",
+        "open_support_case": true,
+        "unresolved_refund": false
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "fla3-edit5",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "fla3-edit4",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "fla3-edit3",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "fla3-edit2",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "fla3-edit1",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "fla3-edit0",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "fla3-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla3-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla3-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla3-edit1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla3-edit2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla3-edit3",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "fla3-edit4",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "fla3-edit5",
+        "open_support_case": false,
+        "unresolved_refund": false
+      }
+    ]
+  },
+  "H05": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix0-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix0-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix0-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix0-add0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix0-add1",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix0-add1",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix0-add0",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix0-edit0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix0-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix0-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix0-edit0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      }
+    ]
+  },
+  "H06": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix1-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix1-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix1-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix1-edit1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix1-add0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix1-add1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix1-add1",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix1-add0",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix1-edit1",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix1-edit0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix1-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix1-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix1-edit0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix1-edit1",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H07": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix2-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix2-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix2-edit0",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix2-edit1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix2-edit2",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix2-add0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix2-add1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix2-add1",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix2-add0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix2-edit2",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix2-edit1",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix2-edit0",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix2-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix2-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix2-edit0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix2-edit1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix2-edit2",
+        "open_support_case": true,
+        "unresolved_refund": false
+      }
+    ]
+  },
+  "H08": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix3-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix3-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix3-edit0",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix3-edit1",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix3-edit2",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix3-edit3",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix3-add0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix3-add1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix3-add1",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix3-add0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix3-edit3",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix3-edit2",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix3-edit1",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix3-edit0",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix3-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix3-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix3-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix3-edit1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix3-edit2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix3-edit3",
+        "open_support_case": true,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H09": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "sta0-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta0-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "sta0-add0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta0-add1",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "sta0-add1",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "sta0-add1",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "sta0-add0",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "sta0-add0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "sta0-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta0-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H10": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "sta1-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta1-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta1-add0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "sta1-add1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta1-add2",
+        "open_support_case": true,
+        "unresolved_refund": false
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "sta1-add2",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "sta1-add2",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "sta1-add1",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "sta1-add1",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "sta1-add0",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "sta1-add0",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "sta1-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta1-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H11": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "sta2-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta2-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "sta2-add0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta2-add1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "sta2-add2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta2-add3",
+        "open_support_case": true,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "sta2-add3",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "sta2-add3",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "sta2-add2",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "sta2-add2",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "sta2-add1",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "sta2-add1",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "sta2-add0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "sta2-add0",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "sta2-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta2-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H12": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "sta3-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta3-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta3-add0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "sta3-add1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta3-add2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "sta3-add3",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta3-add4",
+        "open_support_case": false,
+        "unresolved_refund": false
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "sta3-add4",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "sta3-add4",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "sta3-add3",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "sta3-add3",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "sta3-add2",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "sta3-add2",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "sta3-add1",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "sta3-add1",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "sta3-add0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "sta3-add0",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "sta3-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "sta3-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H13": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "opt0-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt0-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt0-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt0-edit1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt0-edit2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "opt0-keep0",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "opt0-optional",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "opt0-edit2",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "opt0-edit1",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "opt0-edit0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "opt0-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt0-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt0-edit0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt0-edit1",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt0-edit2",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H14": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "opt1-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt1-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt1-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt1-edit1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt1-edit2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt1-edit3",
+        "open_support_case": false,
+        "unresolved_refund": false
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "opt1-keep0",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "opt1-optional",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "opt1-edit3",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "opt1-edit2",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "opt1-edit1",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "opt1-edit0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "opt1-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt1-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt1-edit0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt1-edit1",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt1-edit2",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt1-edit3",
+        "open_support_case": true,
+        "unresolved_refund": false
+      }
+    ]
+  },
+  "H15": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "opt2-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt2-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt2-edit0",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt2-edit1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt2-edit2",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt2-edit3",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt2-edit4",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "opt2-keep0",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "opt2-optional",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "opt2-edit4",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "opt2-edit3",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "opt2-edit2",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "opt2-edit1",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "opt2-edit0",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "opt2-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt2-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt2-edit0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt2-edit1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt2-edit2",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt2-edit3",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt2-edit4",
+        "open_support_case": true,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H16": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "opt3-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt3-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt3-edit0",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt3-edit1",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt3-edit2",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt3-edit3",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt3-edit4",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt3-edit5",
+        "open_support_case": true,
+        "unresolved_refund": false
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "opt3-keep0",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "opt3-optional",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "opt3-edit5",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "opt3-edit4",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "opt3-edit3",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "opt3-edit2",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "opt3-edit1",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "opt3-edit0",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "opt3-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt3-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt3-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt3-edit1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt3-edit2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt3-edit3",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "opt3-edit4",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "opt3-edit5",
+        "open_support_case": false,
+        "unresolved_refund": false
+      }
+    ]
+  },
+  "H17": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix0-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix0-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix0-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix0-edit1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix0-add0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix0-direct",
+        "open_support_case": true,
+        "unresolved_refund": false
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix0-direct",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix0-add0",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix0-add0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix0-edit1",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix0-edit0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix0-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix0-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix0-edit0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix0-edit1",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H18": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix1-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix1-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix1-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix1-edit1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix1-add0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix1-add1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix1-direct",
+        "open_support_case": true,
+        "unresolved_refund": false
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix1-direct",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix1-add1",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix1-add1",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix1-add0",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix1-add0",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix1-edit1",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix1-edit0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix1-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix1-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix1-edit0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix1-edit1",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H19": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix2-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix2-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix2-edit0",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix2-edit1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix2-add0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix2-add1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix2-add2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix2-direct",
+        "open_support_case": true,
+        "unresolved_refund": false
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix2-direct",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix2-add2",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix2-add2",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix2-add1",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix2-add1",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix2-add0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix2-add0",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix2-edit1",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix2-edit0",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix2-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix2-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix2-edit0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix2-edit1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      }
+    ]
+  },
+  "H20": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix3-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix3-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix3-edit0",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix3-edit1",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix3-add0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix3-add1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix3-add2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix3-add3",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix3-direct",
+        "open_support_case": true,
+        "unresolved_refund": false
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix3-direct",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix3-add3",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix3-add3",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix3-add2",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix3-add2",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix3-add1",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix3-add1",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix3-add0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix3-add0",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "mix3-edit1",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "mix3-edit0",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "mix3-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix3-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "mix3-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "mix3-edit1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      }
+    ]
+  },
+  "H21": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "bul0-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul0-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul0-add0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul0-add1",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul0-add2",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul0-keep2",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "bul0-add2",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "bul0-add1",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "bul0-add0",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "bul0-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul0-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul0-keep2",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H22": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "bul1-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul1-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul1-add0",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul1-add1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul1-add2",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul1-add3",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul1-keep2",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "bul1-add3",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "bul1-add2",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "bul1-add1",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "bul1-add0",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "bul1-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul1-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul1-keep2",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H23": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "bul2-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul2-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul2-add0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul2-add1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul2-add2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul2-add3",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul2-add4",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul2-keep2",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "bul2-add4",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "bul2-add3",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "bul2-add2",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "bul2-add1",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "bul2-add0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "bul2-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul2-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul2-keep2",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H24": {
+    "description": "Reach the exact target snapshot using only the exhaustive operation allowlist. Preserve all target records and their exact Boolean flags. Allowed actions are optional; choose and order the actions needed. Protection remains sticky throughout a proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "bul3-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul3-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul3-add0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul3-add1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul3-add2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul3-add3",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul3-add4",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul3-add5",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul3-keep2",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "bul3-add5",
+          "open_support_case": false,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "bul3-add4",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "bul3-add3",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "bul3-add2",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "bul3-add1",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "create_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "bul3-add0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "create_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "bul3-keep0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "bul3-keep1",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "bul3-keep2",
+        "open_support_case": false,
+        "unresolved_refund": true
+      }
+    ]
+  },
+  "H25": {
+    "description": "Reconcile the retained records to the exact target flags and remove the surplus record. Use only the exhaustive allowlist; protection remains sticky throughout the proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "diag0-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag0-edit1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag0-edit2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag0-keep",
+        "open_support_case": true,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer_id": "diag0-zremove",
+        "type": "delete_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "diag0-edit2",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "diag0-edit1",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "diag0-edit0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "diag0-edit0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag0-edit1",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag0-edit2",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag0-keep",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag0-zremove",
+        "open_support_case": false,
+        "unresolved_refund": false
+      }
+    ]
+  },
+  "H26": {
+    "description": "Reconcile the retained records to the exact target flags and remove the surplus record. Use only the exhaustive allowlist; protection remains sticky throughout the proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "diag1-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag1-edit1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag1-edit2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag1-edit3",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag1-keep",
+        "open_support_case": true,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer_id": "diag1-zremove",
+        "type": "delete_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "diag1-edit3",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "diag1-edit2",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "diag1-edit1",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "diag1-edit0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "diag1-edit0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag1-edit1",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag1-edit2",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag1-edit3",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag1-keep",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag1-zremove",
+        "open_support_case": false,
+        "unresolved_refund": false
+      }
+    ]
+  },
+  "H27": {
+    "description": "Reconcile the retained records to the exact target flags and remove the surplus record. Use only the exhaustive allowlist; protection remains sticky throughout the proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "diag2-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag2-edit1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag2-edit2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag2-edit3",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag2-edit4",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag2-keep",
+        "open_support_case": true,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer_id": "diag2-zremove",
+        "type": "delete_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "diag2-edit4",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "diag2-edit3",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "diag2-edit2",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "diag2-edit1",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "diag2-edit0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "diag2-edit0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag2-edit1",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag2-edit2",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag2-edit3",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag2-edit4",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag2-keep",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag2-zremove",
+        "open_support_case": false,
+        "unresolved_refund": false
+      }
+    ]
+  },
+  "H28": {
+    "description": "Reconcile the retained records to the exact target flags and remove the surplus record. Use only the exhaustive allowlist; protection remains sticky throughout the proposal.",
+    "exact_target_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "diag3-edit0",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag3-edit1",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag3-edit2",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag3-edit3",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag3-edit4",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag3-edit5",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag3-keep",
+        "open_support_case": true,
+        "unresolved_refund": true
+      }
+    ],
+    "full_operation_allowlist": [
+      {
+        "customer_id": "diag3-zremove",
+        "type": "delete_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "diag3-edit5",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "diag3-edit4",
+          "open_support_case": false,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "diag3-edit3",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "diag3-edit2",
+          "open_support_case": true,
+          "unresolved_refund": true
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": true,
+          "customer_id": "diag3-edit1",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      },
+      {
+        "customer": {
+          "active_subscription": false,
+          "customer_id": "diag3-edit0",
+          "open_support_case": true,
+          "unresolved_refund": false
+        },
+        "type": "replace_customer"
+      }
+    ],
+    "original_state": [
+      {
+        "active_subscription": false,
+        "customer_id": "diag3-edit0",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag3-edit1",
+        "open_support_case": false,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag3-edit2",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag3-edit3",
+        "open_support_case": false,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag3-edit4",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag3-edit5",
+        "open_support_case": true,
+        "unresolved_refund": false
+      },
+      {
+        "active_subscription": true,
+        "customer_id": "diag3-keep",
+        "open_support_case": true,
+        "unresolved_refund": true
+      },
+      {
+        "active_subscription": false,
+        "customer_id": "diag3-zremove",
+        "open_support_case": false,
+        "unresolved_refund": false
+      }
+    ]
+  }
+}

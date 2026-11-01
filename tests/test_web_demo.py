@@ -94,7 +94,7 @@ def test_interface_contract():
     html = web_demo.route("/")[2].decode()
     assert 'lang="en"' in html and 'aria-live="polite"' in html
     assert 'for="scenario"' in html
-    assert "RECORDED MODEL OUTPUT / OFFLINE REPLAY" in html
+    assert "Prerecorded Meta Llama inference; verification freshly computed offline" in html
     assert "not universal safety" in html
     js = web_demo.route("/app.js")[2].decode()
     assert "textContent" in js and "innerHTML" not in js
@@ -152,3 +152,21 @@ def test_offline_ui_behavior(tmp_path):
     result = subprocess.run([node, 'tests/web_demo_ui.cjs', str(fixtures)],
                             cwd=Path(__file__).resolve().parents[1], capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
+
+
+def test_judge_claims_and_default_scenario():
+    html = web_demo.route('/')[2].decode()
+    assert '<option value="replacement" selected>' in html
+    assert 'Right state. Wrong actions.' in html
+    assert '2 successful guided repairs' in html
+    assert html.count('2/24') == 2
+    assert html.count('0/21') == 2
+    assert 'held-out collection · incomplete' in html
+    assert '1 response-schema failure' in html
+    assert 'shared initial successes' in html
+    assert 'synthetic finite-domain results' in html
+    assert 'not general reliability or safety guarantees' in html
+    assert 'Historical findings, not recomputed by this page' in html
+    assert 'No live model inference' in html
+    # Public API defaults and provenance remain compatible; only UI selection changes.
+    assert web_demo.build_evidence()['scenario'] == 'delete'

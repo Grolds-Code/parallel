@@ -25,24 +25,30 @@ With Python 3.12+ and uv installed, install the exact dependencies in `uv.lock`:
 
 ```sh
 uv sync --locked --group dev
-uv run --no-sync pytest -q
+uv run --no-sync pytest -q --ignore=tests/test_heldout.py
+uv run --no-sync python tools/validate_heldout_v1.py
 ```
 
 Dependency installation may require package downloads. In an already provisioned
 checkout, run entirely locally:
 
 ```sh
-.venv/bin/python -m pytest -q
+.venv/bin/python -m pytest -q --ignore=tests/test_heldout.py
+.venv/bin/python tools/validate_heldout_v1.py
 ```
 
-Node.js is optional for the browser UI test harness (`tests/web_demo_ui.cjs`),
-which pytest runs automatically when `node` is on PATH and otherwise skips.
+Both validation lanes above are mandatory. Do not run unrestricted pytest against
+modified current source: the original held-out tests require frozen source bytes.
+
+Node.js is required for complete validation of the browser UI test harness
+(`tests/web_demo_ui.cjs`). Pytest runs it automatically when `node` is on PATH;
+a skipped harness is not a complete validation run.
 Use Node.js 24 (also configured in CI). The harness uses Node's built-in modules
 and a simulated DOM; no npm packages, browser installation, or browser downloads
 are needed. Install Node to include this test in a complete offline run.
 
 GitHub Actions installs the locked Python development dependencies and runs the
-same suite with Node enabled. Installation needs package downloads; the tests
+same two mandatory lanes with Node enabled. Installation needs package downloads; the tests
 need no credentials, paid services, model downloads, or live inference.
 
 Tests include exhaustive protection-flag combinations, invalid operations,
@@ -500,7 +506,8 @@ and witness replay add local evaluations beyond the loop count. The 63.73 second
 belongs only to the historical live run; the replay does not reproduce model
 generation or latency. Bounded success is not universal safety or execution approval.
 
-Offline tests, including failure exit handling: `uv run pytest -q`.
+Offline tests, including failure exit handling, are covered by the two mandatory
+commands in [Current and historical validation](#current-and-historical-validation).
 
 ## Local browser demonstration
 
@@ -513,6 +520,11 @@ uv run --offline python -m parallel_agent.web_demo
 Open **http://127.0.0.1:8765**. Stop with Ctrl-C; optionally choose another
 port with `--port 8766`. The standard-library server binds only to loopback.
 No new dependencies, credentials, network services, GPUs, or inference are needed.
+
+The opening comparison defaults to create plus an identical replacement: **goal met,
+action forbidden, proposal rejected**. Proposed operations, simulated execution,
+exact goal outcome, policy violations, bounded search and the decision appear
+together. Native controls support keyboard use and a responsive layout.
 
 The six-step investigation shows the synthetic snapshot, simulated operations,
 replayable observed counterexample, original-customer action policy, recorded
@@ -536,7 +548,38 @@ Static routes are allowlisted, with no arbitrary file access or inference proxy.
 This is a local demonstration, not a production web service. Bounded verification
 is not universal safety or execution approval. The existing CLI replay remains
 available unchanged. Offline backend and route coverage is in
-`tests/test_web_demo.py`; run `uv run pytest -q`.
+`tests/test_web_demo.py`; run both mandatory commands in
+[Current and historical validation](#current-and-historical-validation).
+
+### Experimental evidence shown in the lab
+
+The historical **v3 development pilot produced two successful guided repairs of
+previously rejected proposals**. The subsequent **incomplete held-out v1
+collection** produced **2/24 accepted successes in both guided and retry arms**
+on satisfiable tasks, all from shared initial successes. Recovery was **0/21 in
+both arms** among eligible initially rejected tasks. **One response-schema
+failure** left one initial response unmeasured and excluded from recovery
+eligibility. No repair advantage was observed in this incomplete collection.
+These synthetic finite-domain results do not establish general reliability or
+safety guarantees.
+
+The public page contains only these verified nonsecret aggregates, checked against
+the historical v3 and held-out v1 reports during development. It neither reads nor
+serves private reports. These historical aggregate findings are not recomputed by
+the demo. The separate recorded Meta Llama repair is prerecorded model output;
+its deterministic replay, simulation, explicit action-policy checks and bounded
+search are newly computed on each evidence request. No live inference occurs.
+The held-out freeze hashes the original README, assets and UI tests. Editing this
+lab intentionally makes that historical freeze validation fail in this working
+checkout; the frozen manifest is preserved, not regenerated. Use the isolated
+historical validation command below. Reconstruction requires BOTH pinned Git
+revision `058eda7bda5aacffbd859a9fbe8ac174a65c37dd` and the integrity-checked
+`tests/fixtures/parallel-heldout-v1-freeze.tar.gz` overlay. The archive alone is
+not a complete source snapshot. This reproduces offline assertions, not live
+collection or historical model results.
+
+Policies must be supplied explicitly; automatic policy extraction, general repair
+effectiveness and safe real-world execution remain unproven by this demo.
 
 ### Optional public CPU-only lab
 
@@ -555,3 +598,16 @@ synthetic customer-management tasks, independent goals and operation policies,
 metric definitions, and a later controlled Meta Llama repair-versus-retry study.
 Run `.venv/bin/python -m parallel_agent.benchmark` from this checkout for a JSON
 fixture replay. This invokes no models and reports no model-performance results.
+
+### Current and historical validation
+
+Both validation lanes are mandatory: `uv run --no-sync pytest -q --ignore=tests/test_heldout.py`
+for the evolving application, and `uv run --no-sync python tools/validate_heldout_v1.py`
+for the original historical tests. The latter combines pinned Git revision
+`058eda7bda5aacffbd859a9fbe8ac174a65c37dd` with the integrity-checked
+`tests/fixtures/parallel-heldout-v1-freeze.tar.gz` overlay, then verifies all 58
+frozen files in an isolated temporary tree without changing the public application.
+Both inputs are required: the ten-file archive is not a complete source snapshot.
+The revision must be available locally; a source ZIP alone is insufficient.
+See [historical validation](docs/historical_validation.md) for integrity pins,
+archive review, CI setup, import isolation, and reproducibility limitations.
