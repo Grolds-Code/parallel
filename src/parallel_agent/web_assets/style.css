@@ -131,3 +131,15 @@ pre { max-width: 100%; overscroll-behavior: contain; }
   .intro{padding-top:12px;gap:12px}
 }
 @media print{.intro{display:block}.evidence-preview{margin-block:16px}.preview-link{display:none}}
+
+/* Historical trace uses native keyboard-accessible disclosures. */
+#repair-trace{scroll-margin-top:24px}
+#repair-trace:focus{outline:3px solid #955b10;outline-offset:4px}
+#outcomes{align-items:start}
+#outcomes .outcome{min-width:0;min-height:0}
+#outcomes .recorded{background:#f5f7f2;border-top-color:#61736a}
+#outcomes h3{font-size:18px;overflow-wrap:anywhere}
+#outcomes details{border-top:1px solid #cbd7cb;margin-top:12px}
+#outcomes summary{font-size:13px;line-height:1.5;overflow-wrap:anywhere;cursor:pointer}
+#outcomes pre{font-size:12px}
+@media screen and (max-width:800px){#outcomes{grid-template-columns:minmax(0,1fr)}}
