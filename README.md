@@ -1,5 +1,27 @@
 # PARALLEL
 
+**Verify what AI agents do, not just what they achieve.**
+
+**[Watch the 3-minute demo](https://www.youtube.com/watch?v=brGS_B0mRNU)** ·
+**[Try the live application](https://groldotieno97--parallel-public-demo-serve.us-east.modal.run/)** ·
+**[Inspect the four-stage Llama verification trace](https://groldotieno97--parallel-public-demo-serve.us-east.modal.run/#repair-trace)**
+
+An agent can reach the right final state through forbidden actions. PARALLEL
+makes that distinction inspectable: creating a new customer while identically
+replacing a protected existing customer meets the goal, but fails the explicit
+action policy. Its contribution is a deterministic verification layer that
+separates task completion, operation-level policy checks, and bounded
+counterexample search, with replayable evidence to guide candidate repairs.
+
+**Built with Llama.** The public demo replays prerecorded Meta Llama output from
+a historical live repair. Simulation, goal and action-policy checks, and bounded
+verification are independently recomputed on each evidence request; the demo
+does not invoke fresh model inference. Inspect the rejected proposal, verifier
+feedback, recorded correction, and final bounded verdict in the trace above.
+This demonstrates an inspectable repair workflow, not general autonomous repair
+effectiveness or a safety guarantee. The [incomplete held-out evaluation](#experimental-evidence-shown-in-the-lab)
+found no repair advantage over retry; its findings and limitations remain below.
+
 PARALLEL is a counterexample-guided agent verification and repair system. It
 uses a Python 3.12+ in-memory simulator, safety verifier, and bounded search for
 proposed customer operations, with an optional provider-independent
@@ -581,7 +603,7 @@ collection or historical model results.
 Policies must be supplied explicitly; automatic policy extraction, general repair
 effectiveness and safe real-world execution remain unproven by this demo.
 
-### Optional public CPU-only lab
+### Live public CPU-only lab
 
 A separate [public Modal deployment recipe](deployment/modal/PUBLIC_DEMO.md)
 defines `parallel-public-demo` with the same offline verification evidence and
@@ -589,7 +611,8 @@ allowlisted assets, strict read-only ASGI routes, no GPU or attached secrets,
 and one container that scales to zero. It leaves the authenticated
 `parallel-llama` service and the loopback development server unchanged.
 See the recipe for offline SDK validation, exact deployment/rollback commands,
-resource limits and approximate costs. This deployment has not been run.
+resource limits and approximate costs. The public service is deployed and has
+been tested: [open the live lab](https://groldotieno97--parallel-public-demo-serve.us-east.modal.run/).
 
 ### Offline evaluation benchmark
 

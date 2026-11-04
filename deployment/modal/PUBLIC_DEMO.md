@@ -2,8 +2,9 @@
 
 `public_demo.py` defines **parallel-public-demo**, a separate CPU-only public
 ASGI application targeting **Modal Python SDK 1.6.3**. It does not change or import
-`app.py`, the authenticated `parallel-llama` GPU service. No deployment has been
-performed as part of this change.
+`app.py`, the authenticated `parallel-llama` GPU service. The public service is
+deployed and has been tested:
+[open the live lab](https://groldotieno97--parallel-public-demo-serve.us-east.modal.run/).
 
 The existing development command remains:
 
@@ -85,7 +86,8 @@ not claimed to be a read-only filesystem or a general Python sandbox.
 From the repository root:
 
 ```sh
-uv run --offline pytest -q
+uv run --no-sync pytest -q --ignore=tests/test_heldout.py
+uv run --no-sync python tools/validate_heldout_v1.py
 node --check src/parallel_agent/web_assets/app.js
 node --check tests/web_demo_ui.cjs
 git diff --check
@@ -115,7 +117,7 @@ audit hook, imports the deployment and calls only the local ASGI factory. It
 needs no cloud credentials and does not build an image or hydrate resources.
 This check was successfully run using the already cached 1.6.3 environment.
 
-## Proposed deployment (operator action; not run)
+## Deployment / redeployment (operator action)
 
 After reviewing the change, use the separate environment above and an already
 authenticated Modal workspace. From the repository root, select the intended
@@ -130,7 +132,7 @@ This creates a public endpoint; use the HTTPS URL printed by Modal. Do not run
 service's proxy token/cache to this app. Account credentials used by the local
 CLI are not application secrets to attach to containers.
 
-A future authorized live check must verify image startup, explicit source
+For deployment validation, check image startup, explicit source
 packaging, proxy routing, headers, body/method rejection, resource restrictions,
 scale-to-zero and billing. Offline import does not prove those cloud properties.
 Timeouts do not establish an end-to-end queue/cold-start deadline. Public traffic
