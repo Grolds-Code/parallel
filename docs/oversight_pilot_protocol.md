@@ -86,6 +86,29 @@ The journal also records response hashes, client elapsed time and token
 counts reported by the endpoint. Compare those counts with actual billing
 records for cost estimates.
 
+### Continue an interrupted collection
+
+If the original collector stopped on a transport error, inspect its journal
+and responses with this offline command.
+
+```sh
+uv run --no-sync python -m parallel_agent.oversight_resume \
+  artifacts/oversight-requests.jsonl artifacts/oversight-run-v1
+```
+
+Add `--execute` in WSL or Linux to submit the requests explicitly marked
+`unattempted`. The continuation checks the original configuration and
+preserves the original files. A durable marker reserves each request
+before submission. Any original failure or later reserved request with
+an unknown outcome stays missing. The call cap is 120 across both
+sessions. The continuation subtracts recorded request time from the
+original time budget and records any further failure separately.
+
+After every eligible request has a record, the continuation writes
+`responses-completed.jsonl` in the original run directory. Use it for
+scoring and report valid model responses separately from transport failures
+and any decisions blocked by default when a response was missing.
+
 ### Score responses
 
 Score a JSON Lines response file with one entry per exported request.
