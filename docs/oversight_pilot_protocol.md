@@ -51,6 +51,43 @@ the `system` and `user` fields, as fresh messages with separate history
 for each request. Keep the opaque `id` for matching responses locally.
 Use one response per request. Record latency and billed tokens separately.
 
+### Collect responses
+
+Generate an offline preflight plan for the exported requests. The collector
+reads the existing `PARALLEL_LLM_BASE_URL`, `PARALLEL_LLM_MODEL`, and
+`PARALLEL_LLM_API_KEY` environment settings. The plan displays the model,
+the request and code identities, and the names of any missing settings.
+For the Modal deployment in this repository, include
+`--modal-result-redirects` in the preflight command.
+
+```sh
+uv run --no-sync python -m parallel_agent.oversight_collect preflight \
+  artifacts/oversight-requests.jsonl > artifacts/oversight-plan.json
+```
+
+Use the plan with `ready: true` after checking the exact reviewer model
+and the available inference budget. Each live run has a fresh output
+directory, a maximum of 120 model submissions, and a 45-minute collection
+deadline. The client uses JSON-object mode, temperature zero and at most
+128 output tokens per response. The server must report the planned model ID.
+
+```sh
+uv run --no-sync python -m parallel_agent.oversight_collect collect \
+  artifacts/oversight-requests.jsonl artifacts/oversight-plan.json \
+  artifacts/oversight-run-v1 --execute
+```
+
+Each request is logged before submission. The run stops submitting on
+a transport failure, model identity mismatch, interruption during a request,
+or the collection deadline. Unattempted rows get a null response and a
+separate reason in the journal. Keep the journal if the process is killed.
+It records attempted submissions and the run directory is exclusive.
+The journal also records response hashes, client elapsed time and token
+counts reported by the endpoint. Compare those counts with actual billing
+records for cost estimates.
+
+### Score responses
+
 Score a JSON Lines response file with one entry per exported request.
 Each entry has an `id` and the model's parsed `response` object.
 
@@ -63,7 +100,7 @@ responses default to blocking and count as failures. The scorer rejects
 incomplete files, duplicate IDs and unexpected IDs.
 
 ```sh
-uv run --no-sync python -m parallel_agent.oversight_pilot score artifacts/oversight-responses.jsonl
+uv run --no-sync python -m parallel_agent.oversight_pilot score artifacts/oversight-run-v1/responses.jsonl
 ```
 
 ## Readout
