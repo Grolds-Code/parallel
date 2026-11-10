@@ -1,33 +1,32 @@
 # PARALLEL
 
-**Verify what AI agents do, not just what they achieve.**
+PARALLEL checks proposed AI agent actions against explicit policies and measures
+how reviewers decide whether to release an agent's work.
 
-**[Watch the 3-minute demo](https://www.youtube.com/watch?v=brGS_B0mRNU)** ·
-**[Try the live application](https://groldotieno97--parallel-public-demo-serve.us-east.modal.run/)** ·
-**[Inspect the four-stage Llama verification trace](https://groldotieno97--parallel-public-demo-serve.us-east.modal.run/#repair-trace)**
+**[Open the Verification Lab](https://groldotieno97--parallel-public-demo-serve.us-east.modal.run/)** ·
+**[Read the oversight results](docs/oversight_pilot_protocol.md#observed-llama-run)** ·
+**[Run the offline checks](#reproduce)**
 
-An agent can reach the right final state through forbidden actions. PARALLEL
-makes that distinction inspectable: creating a new customer while identically
-replacing a protected existing customer meets the goal, but fails the explicit
-action policy. Its contribution is a deterministic verification layer that
-separates task completion, operation-level policy checks, and bounded
-counterexample search, with replayable evidence to guide candidate repairs.
+A customer-management agent can create the requested record while also writing
+to a protected record. PARALLEL simulates the proposed operations in memory,
+checks the action policy, and searches a bounded set of states for
+counterexamples. The Verification Lab replays a recorded Llama repair and
+recomputes the verification checks on each evidence request.
+[Inspect the repair trace](https://groldotieno97--parallel-public-demo-serve.us-east.modal.run/#repair-trace).
 
-**Built with Llama.** The public demo replays prerecorded Meta Llama output from
-a historical live repair. Simulation, goal and action-policy checks, and bounded
-verification are independently recomputed on each evidence request; the demo
-does not invoke fresh model inference. Inspect the rejected proposal, verifier
-feedback, recorded correction, and final bounded verdict in the trace above.
-This demonstrates an inspectable repair workflow, not general autonomous repair
-effectiveness or a safety guarantee. The [incomplete held-out evaluation](#experimental-evidence-shown-in-the-lab)
-found no repair advantage over retry; its findings and limitations remain below.
+## Oversight pilot
 
-PARALLEL is a counterexample-guided agent verification and repair system. It
-uses a Python 3.12+ in-memory simulator, safety verifier, and bounded search for
-proposed customer operations, with an optional provider-independent
-chat-completions connector.
-There are no runtime dependencies or database writes. The deterministic core and
-test suite require no model calls, external APIs, or credentials.
+Each of the ten synthetic pairs shares a starting state, a final state, and a
+sequence of operation types. One run obeys the release policy and one violates
+it. We repeat each run across six evidence conditions and measure approvals and
+escalations with a review cap of four per 20-case condition.
+
+In the live pilot, **Llama 3.2 3B Instruct approved 59 of 60 unsafe cases** and
+escalated zero. Unsafe approvals stayed the same or rose when the reviewer
+received tool records. The deterministic policy baseline approved zero unsafe
+cases. In the target-omitted condition, tool records restored the evidence the
+rules needed to clear all ten permitted cases. The pilot covers one model and
+one synthetic workflow. [Results, run details and protocol](docs/oversight_pilot_protocol.md).
 
 ## Proposed project license
 
@@ -43,10 +42,17 @@ Llama deployment; the project's Apache license does not replace those terms.
 
 ## Reproduce
 
-With Python 3.12+ and uv installed, install the exact dependencies in `uv.lock`:
+With Python 3.12+ and uv installed, use the locked dependencies to reproduce
+the oversight fixtures, request hash, and deterministic baselines.
 
 ```sh
 uv sync --locked --group dev
+uv run --no-sync python -m parallel_agent.oversight_pilot check
+```
+
+Run the current and historical test suites separately.
+
+```sh
 uv run --no-sync pytest -q --ignore=tests/test_heldout.py
 uv run --no-sync python tools/validate_heldout_v1.py
 ```
@@ -591,14 +597,11 @@ serves private reports. These historical aggregate findings are not recomputed b
 the demo. The separate recorded Meta Llama repair is prerecorded model output;
 its deterministic replay, simulation, explicit action-policy checks and bounded
 search are newly computed on each evidence request. No live inference occurs.
-The held-out freeze hashes the original README, assets and UI tests. Editing this
-lab intentionally makes that historical freeze validation fail in this working
-checkout; the frozen manifest is preserved, not regenerated. Use the isolated
-historical validation command below. Reconstruction requires BOTH pinned Git
-revision `058eda7bda5aacffbd859a9fbe8ac174a65c37dd` and the integrity-checked
-`tests/fixtures/parallel-heldout-v1-freeze.tar.gz` overlay. The archive alone is
-not a complete source snapshot. This reproduces offline assertions, not live
-collection or historical model results.
+The isolated historical validation command below reconstructs the original
+README, assets, source, and UI tests from pinned Git revision
+`058eda7bda5aacffbd859a9fbe8ac174a65c37dd` and the integrity-checked
+`tests/fixtures/parallel-heldout-v1-freeze.tar.gz` overlay. It reruns the offline
+assertions against that snapshot.
 
 Policies must be supplied explicitly; automatic policy extraction, general repair
 effectiveness and safe real-world execution remain unproven by this demo.
