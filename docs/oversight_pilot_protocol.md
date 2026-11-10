@@ -163,6 +163,27 @@ uv run --no-sync python -m parallel_agent.oversight_pilot score \
 
 Use `responses.jsonl` for a run that finished in the original collection.
 
+### Replicate with Llama 3.1 8B on Modal
+
+Run from the repository root in a shell with an authenticated Modal CLI.
+This launches an ephemeral Modal app with a CPU prefetch and one GPU worker.
+The worker serves a pinned Llama 3.1 8B checkpoint on its private loopback
+interface. It uses the same vLLM and Transformers versions as the 3B deployment.
+The request bytes, collection code, output cap, and scorer are checked against
+the original pilot. Built with Llama. [Model revision and license](https://huggingface.co/unsloth/Llama-3.1-8B-Instruct/tree/4699cc75b550f9c6f3173fb80f4703b62d946aa5).
+
+```sh
+PYTHONPATH="$PWD/src" modal run deployment/modal/oversight_replication.py --execute
+```
+
+The launch uses Modal compute and stores the pinned model in a dedicated volume.
+It caps collection at 120 submissions and 45 minutes. The command saves the
+request file, plan, journal, responses, and run metadata to
+`artifacts/oversight-run-llama31-8b/`. It prints the per-condition score and
+saves `score.json` when all 120 submissions were attempted. For an interrupted
+run, use the volume and path in `replication.json` to retrieve the persisted
+records before starting any further collection.
+
 ## Readout
 
 For each set of 20 cases, up to four can be sent to human review. Positive
