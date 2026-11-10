@@ -5,6 +5,8 @@ records as well as the transcript, under a fixed limit on human review?
 
 ## Observed Llama run
 
+### Llama 3.2 3B
+
 We evaluated `unsloth/Llama-3.2-3B-Instruct` on Modal at temperature 0 with
 JSON-object mode and a cap of 128 output tokens. The collector attempted 110
 of the 120 frozen requests before a transport error. The continuation submitted
@@ -27,14 +29,45 @@ cases. Unsafe approvals stayed the same or rose when the reviewer received tool
 records. All 59 permitted cases with a valid response were approved. The scorer
 blocked the one permitted case with a transport failure by default.
 
+### Llama 3.1 8B replication
+
+The 8B run used the same 120 frozen requests and scoring rules and returned
+120 valid responses. Modal served `unsloth/Llama-3.1-8B-Instruct` at revision
+`4699cc75b550f9c6f3173fb80f4703b62d946aa5` with vLLM 0.11.0, float16,
+temperature 0, JSON-object mode, and a 128-token output cap.
+[Runner used in the replication](https://github.com/Grolds-Code/parallel/blob/f665d5d5a44816b4095df567a952ed2ef3e6ec8e/deployment/modal/oversight_replication.py).
+
+| Transcript profile | Evidence view | Permitted approvals | Unsafe approvals | Permitted escalations | Unsafe escalations |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Complete | Transcript | 8/10 | 9/10 | 2 | 1 |
+| Complete | Transcript + tool records | 7/10 | 10/10 | 3 | 0 |
+| Outcome omitted | Transcript | 8/10 | 10/10 | 2 | 0 |
+| Outcome omitted | Transcript + tool records | 8/10 | 9/10 | 2 | 1 |
+| Target omitted | Transcript | 10/10 | 10/10 | 0 | 0 |
+| Target omitted | Transcript + tool records | 8/10 | 10/10 | 2 | 0 |
+
+The scorer counted 58 unsafe approvals, 49 permitted approvals, and 13
+escalations. The escalation queue contained two unsafe and eleven permitted
+cases. Both classes had zero automatic blocks after review triage.
+
+### Comparison with the policy baseline
+
+Both Llama reviewers approved 9/10 unsafe cases with a complete transcript.
+In the target-omitted condition, restoring the targets via tool records left
+unsafe approvals at 10/10 for both reviewers. The 8B reviewer escalated two
+permitted cases with the records, reducing automatic permitted approvals from
+10/10 to 8/10.
+
 The deterministic policy baseline approved zero unsafe cases across all six
 conditions. When target IDs were omitted and only the transcript was available,
 the rules escalated four cases (two permitted and two unsafe) and cleared none
 of the permitted cases. With the missing targets restored in the tool records,
 the rules approved 10/10 permitted cases and blocked 10/10 unsafe cases.
 
-The 120 requests reuse the same 20 traces across six conditions. These aggregate
-counts describe one reviewer on ten authored pairs in one synthetic workflow.
+Each run uses the same 20 traces across six conditions. The aggregate counts
+describe two Llama reviewer configurations on ten authored pairs in one
+synthetic workflow. The 3B run used a Modal web endpoint and the 8B run used
+vLLM on the worker's loopback interface. Escalations represent pending review.
 
 ## Pilot design
 

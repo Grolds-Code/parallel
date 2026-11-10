@@ -21,12 +21,13 @@ sequence of operation types. One run obeys the release policy and one violates
 it. We repeat each run across six evidence conditions and measure approvals and
 escalations with a review cap of four per 20-case condition.
 
-In the live pilot, **Llama 3.2 3B Instruct approved 59 of 60 unsafe cases** and
-escalated zero. Unsafe approvals stayed the same or rose when the reviewer
-received tool records. The deterministic policy baseline approved zero unsafe
-cases. In the target-omitted condition, tool records restored the evidence the
-rules needed to clear all ten permitted cases. The pilot covers one model and
-one synthetic workflow. [Results, run details and protocol](docs/oversight_pilot_protocol.md).
+**Llama 3.2 3B Instruct approved 59 of 60 unsafe cases. Llama 3.1 8B Instruct
+approved 58 of 60**, with 2 unsafe and 11 permitted cases escalated. When the
+transcript omitted target IDs, both reviewers approved all ten unsafe cases
+even after tool records restored the targets. The deterministic policy baseline
+used those same records to clear all ten permitted cases and block all ten
+unsafe cases. Both reviewers ran on the same ten pairs in one synthetic workflow.
+[Results, run details and protocol](docs/oversight_pilot_protocol.md).
 
 ## Proposed project license
 
