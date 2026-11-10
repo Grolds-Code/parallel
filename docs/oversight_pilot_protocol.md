@@ -68,6 +68,8 @@ Each run uses the same 20 traces across six conditions. The aggregate counts
 describe two Llama reviewer configurations on ten authored pairs in one
 synthetic workflow. The 3B run used a Modal web endpoint and the 8B run used
 vLLM on the worker's loopback interface. Escalations represent pending review.
+The tables report aggregate live scores. Offline checks reproduce the requests
+and policy baselines. Scoring a live run uses its collected response file.
 
 ## Pilot design
 
@@ -98,10 +100,11 @@ explicit action policy applied to the visible evidence.
 
 ## Commands
 
-Run from the repository root with Python 3.12 or later. The module needs the
-PARALLEL source and the Python standard library.
+Run from the repository root with Python 3.12 or later and uv. Set up the
+checkout once with the locked dependencies.
 
 ```sh
+uv sync --locked --group dev
 uv run --no-sync python -m parallel_agent.oversight_pilot check
 mkdir -p artifacts
 uv run --no-sync python -m parallel_agent.oversight_pilot export > artifacts/oversight-requests.jsonl
@@ -155,16 +158,17 @@ records for cost estimates.
 
 ### Continue an interrupted collection
 
-If the original collector stopped on a transport error, inspect its journal
-and responses with this offline command.
+The continuation expects a plan from collector commit
+`9da79ff9ec3aff1e4b865a4f844bc63defe7fe06`, which was used for the original
+3B run. Inspect that run's journal and responses with this offline command.
 
 ```sh
 uv run --no-sync python -m parallel_agent.oversight_resume \
   artifacts/oversight-requests.jsonl artifacts/oversight-run-v1
 ```
 
-Add `--execute` in WSL or Linux to submit the requests explicitly marked
-`unattempted`. The continuation checks the original configuration and
+After a transport error, add `--execute` in WSL or Linux to submit requests
+explicitly marked `unattempted`. The continuation checks the original configuration and
 preserves the original files. A durable marker reserves each request
 before submission. Any original failure or later reserved request with
 an unknown outcome stays missing. The call cap is 120 across both

@@ -3,9 +3,9 @@
 PARALLEL checks proposed AI agent actions against explicit policies and measures
 how reviewers decide whether to release an agent's work.
 
-**[Open the Verification Lab](https://groldotieno97--parallel-public-demo-serve.us-east.modal.run/)** ·
 **[Read the oversight results](docs/oversight_pilot_protocol.md#observed-llama-run)** ·
-**[Run the offline checks](#reproduce)**
+**[Run the offline checks](#reproduce)** ·
+**[Open the Verification Lab](https://groldotieno97--parallel-public-demo-serve.us-east.modal.run/)**
 
 A customer-management agent can create the requested record while also writing
 to a protected record. PARALLEL simulates the proposed operations in memory,
@@ -28,18 +28,6 @@ even after tool records restored the targets. The deterministic policy baseline
 used those same records to clear all ten permitted cases and block all ten
 unsafe cases. Both reviewers ran on the same ten pairs in one synthetic workflow.
 [Results, run details and protocol](docs/oversight_pilot_protocol.md).
-
-## Proposed project license
-
-The unmodified [Apache License 2.0](LICENSE) and `Apache-2.0` package metadata
-are proposed for owner review before public publication, assuming the author
-owns all original project code.
-
-This proposal applies to original PARALLEL code. It does not relicense Meta Llama
-models or other third-party materials. Model weights are not included. Keep the
-separate [Meta Llama attribution](deployment/modal/Notice) and
-[model licensing documentation](deployment/modal/README.md) with the optional
-Llama deployment; the project's Apache license does not replace those terms.
 
 ## Reproduce
 
@@ -638,3 +626,15 @@ Both inputs are required: the ten-file archive is not a complete source snapshot
 The revision must be available locally; a source ZIP alone is insufficient.
 See [historical validation](docs/historical_validation.md) for integrity pins,
 archive review, CI setup, import isolation, and reproducibility limitations.
+
+## Proposed project license
+
+The unmodified [Apache License 2.0](LICENSE) and `Apache-2.0` package metadata
+are proposed for owner review before public publication, assuming the author
+owns all original project code.
+
+This proposal applies to original PARALLEL code. It does not relicense Meta Llama
+models or other third-party materials. Model weights are not included. Keep the
+separate [Meta Llama attribution](deployment/modal/Notice) and
+[model licensing documentation](deployment/modal/README.md) with the optional
+Llama deployment; the project's Apache license does not replace those terms.
